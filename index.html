@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Varjoy — Open your mind</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Pacifico&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple-dark:  #3B1F6E;
+      --purple-mid:   #6B3FA0;
+      --purple-light: #C4A8E8;
+      --purple-pale:  #EDE4F8;
+      --yellow:       #F5D97A;
+      --yellow-bg:    #FDF3C8;
+      --white:        #FFFFFF;
+      --text-dark:    #2D1B4E;
+      --text-mid:     #5C3D8F;
+      --bubble-joy:   #D4B8F0;
+      --bubble-user:  #F5D97A;
+      --bg-chat:      #FDF8FF;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #f0e8ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Phone frame wrapper */
+    .phone {
+      width: 375px;
+      height: 780px;
+      background: var(--white);
+      border-radius: 40px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 30px 80px rgba(59,31,110,0.25);
+    }
+
+    /* ===================== SCREENS ===================== */
+    .screen {
+      position: absolute;
+      inset: 0;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px);
+    }
+
+    /* ===================== LANDING ===================== */
+    #screen-landing {
+      background: linear-gradient(170deg, #7B4FBF 0%, #4A2580 50%, #3B1F6E 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      padding: 40px 24px 48px;
+    }
+
+    .landing-rays {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 55%;
+      overflow: hidden;
+    }
+    .landing-rays svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .landing-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .landing-headline {
+      color: var(--white);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      margin-bottom: 4px;
+    }
+
+    .landing-logo {
+      font-family: 'Pacifico', cursive;
+      font-size: 52px;
+      color: var(--yellow);
+      line-height: 1.1;
+      margin-bottom: 32px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .btn-start {
+      background: var(--white);
+      color: var(--purple-dark);
+      border: none;
+      border-radius: 100px;
+      padding: 14px 48px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .btn-start:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.2); }
+    .btn-start:active { transform: translateY(0); }
+
+    /* Character illustration placeholder */
+    .landing-character {
+      position: absolute;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 180px;
+      height: 200px;
+      z-index: 1;
+    }
+
+    /* ===================== NAME INPUT ===================== */
+    #screen-name {
+      background: linear-gradient(160deg, #EDE4F8 0%, #FDF8FF 60%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 32px;
+      gap: 24px;
+    }
+
+    .name-emoji {
+      font-size: 56px;
+      line-height: 1;
+    }
+
+    .name-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text-dark);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .name-subtitle {
+      font-size: 15px;
+      color: var(--text-mid);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .name-input {
+      width: 100%;
+      padding: 16px 20px;
+      border: 2px solid var(--purple-light);
+      border-radius: 16px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-dark);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .name-input:focus { border-color: var(--purple-mid); }
+    .name-input::placeholder { color: #bbb; font-weight: 400; }
+
+    .btn-continue {
+      width: 100%;
+      background: var(--purple-mid);
+      color: var(--white);
+      border: none;
+      border-radius: 16px;
+      padding: 16px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-continue:hover { background: var(--purple-dark); transform: translateY(-1px); }
+    .btn-continue:active { transform: translateY(0); }
+
+    /* ===================== CHAT ===================== */
+    #screen-chat {
+      background: var(--yellow-bg);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-header {
+      background: var(--yellow-bg);
+      padding: 20px 20px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgba(245,217,122,0.6);
+      flex-shrink: 0;
+    }
+
+    .chat-back {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-dark);
+      font-size: 18px;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+    }
+
+    .chat-avatar {
+      width: 36px;
+      height: 36px;
+      background: var(--purple-mid);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .chat-name {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text-dark);
+      flex: 1;
+    }
+
+    .chat-settings {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      color: var(--text-mid);
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: var(--bg-chat);
+      scroll-behavior: smooth;
+    }
+    .chat-messages::-webkit-scrollbar { width: 0; }
+
+    .bubble {
+      max-width: 78%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      font-size: 14px;
+      line-height: 1.55;
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    .bubble-joy {
+      background: var(--bubble-joy);
+      color: var(--text-dark);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+
+    .bubble-user {
+      background: var(--bubble-user);
+      color: var(--text-dark);
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+
+    .bubble-typing {
+      background: var(--bubble-joy);
+      color: var(--text-mid);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+      font-style: italic;
+      font-size: 13px;
+      display: none;
+    }
+    .bubble-typing.visible { display: block; }
+
+    .typing-dots span {
+      display: inline-block;
+      animation: bounce 1.2s infinite;
+      font-style: normal;
+      font-size: 18px;
+      line-height: 1;
+    }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-5px); }
+    }
+
+    .chat-input-area {
+      background: var(--yellow-bg);
+      padding: 12px 16px 20px;
+      border-top: 1px solid rgba(245,217,122,0.6);
+      flex-shrink: 0;
+    }
+
+    .chat-input-box {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      box-shadow: 0 2px 12px rgba(107,63,160,0.08);
+    }
+
+    .chat-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-family: 'Nunito', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-dark);
+      background: transparent;
+      resize: none;
+      max-height: 100px;
+      line-height: 1.5;
+    }
+    .chat-input::placeholder { color: #bbb; font-weight: 400; }
+
+    .chat-input-icons {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-mid);
+      font-size: 16px;
+      padding-bottom: 2px;
+    }
+
+    .chat-send {
+      width: 36px;
+      height: 36px;
+      background: var(--purple-mid);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .chat-send:hover { background: var(--purple-dark); transform: scale(1.05); }
+    .chat-send:active { transform: scale(0.95); }
+    .chat-send:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+  </style>
+</head>
+<body>
+
+<div class="phone">
+
+  <!-- ===== LANDING ===== -->
+  <div id="screen-landing" class="screen">
+    <!-- rays background -->
+    <div class="landing-rays">
+      <svg viewBox="0 0 375 430" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="187,420 80,0 130,0" fill="rgba(255,255,255,0.06)"/>
+        <polygon points="187,420 140,0 190,0" fill="rgba(255,255,255,0.05)"/>
+        <polygon points="187,420 200,0 250,0" fill="rgba(255,255,255,0.06)"/>
+        <polygon points="187,420 260,0 320,0" fill="rgba(255,255,255,0.04)"/>
+        <polygon points="187,420 30,0 80,0"  fill="rgba(255,255,255,0.04)"/>
+      </svg>
+    </div>
+
+    <!-- character SVG illustration -->
+    <svg class="landing-character" viewBox="0 0 180 220" xmlns="http://www.w3.org/2000/svg">
+      <!-- body/shoulders -->
+      <ellipse cx="90" cy="210" rx="55" ry="20" fill="#F5D97A" opacity="0.3"/>
+      <!-- shirt -->
+      <path d="M55 160 Q90 145 125 160 L130 220 L50 220 Z" fill="#F5D97A"/>
+      <!-- neck -->
+      <rect x="78" y="135" width="24" height="22" rx="8" fill="#FADADD"/>
+      <!-- head -->
+      <ellipse cx="90" cy="118" rx="38" ry="40" fill="#FADADD"/>
+      <!-- hair -->
+      <path d="M52 110 Q55 70 90 65 Q125 70 128 110 Q118 85 90 82 Q62 85 52 110Z" fill="#3D2314"/>
+      <ellipse cx="90" cy="66" rx="30" ry="10" fill="#3D2314"/>
+      <!-- open brain top -->
+      <path d="M58 95 Q60 72 90 68 Q120 72 122 95" fill="none" stroke="#C4A8E8" stroke-width="3"/>
+      <!-- mind stuff coming out -->
+      <path d="M75 80 Q70 40 60 20 Q80 35 90 15 Q100 35 120 20 Q110 40 105 80"
+            fill="#C4A8E8" opacity="0.9"/>
+      <path d="M80 75 Q76 50 68 30" fill="none" stroke="#F5D97A" stroke-width="4" stroke-linecap="round"/>
+      <path d="M100 75 Q104 50 112 30" fill="none" stroke="#F5D97A" stroke-width="4" stroke-linecap="round"/>
+      <!-- eyes -->
+      <ellipse cx="78" cy="115" rx="5" ry="6" fill="#3D2314"/>
+      <ellipse cx="102" cy="115" rx="5" ry="6" fill="#3D2314"/>
+      <circle cx="80" cy="113" r="1.5" fill="white"/>
+      <circle cx="104" cy="113" r="1.5" fill="white"/>
+      <!-- smile -->
+      <path d="M80 128 Q90 136 100 128" fill="none" stroke="#3D2314" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+
+    <div class="landing-content">
+      <p class="landing-headline">Open your mind with</p>
+      <h1 class="landing-logo">Varjoy</h1>
+      <button class="btn-start" onclick="showScreen('name')">Get Started</button>
+    </div>
+  </div>
+
+  <!-- ===== NAME INPUT ===== -->
+  <div id="screen-name" class="screen hidden">
+    <div class="name-emoji">👋</div>
+    <h2 class="name-title">Heyy, siapa namamu?</h2>
+    <p class="name-subtitle">Joy pengen kenal kamu lebih deket.<br>Boleh tau namamu?</p>
+    <input
+      id="input-name"
+      class="name-input"
+      type="text"
+      placeholder="Tulis namamu di sini..."
+      maxlength="30"
+      autocomplete="off"
+    />
+    <button class="btn-continue" onclick="startChat()">Mulai ngobrol sama Joy →</button>
+  </div>
+
+  <!-- ===== CHAT ===== -->
+  <div id="screen-chat" class="screen hidden">
+    <div class="chat-header">
+      <button class="chat-back" onclick="showScreen('landing')">←</button>
+      <div class="chat-avatar">🐾</div>
+      <span class="chat-name">Joy</span>
+      <button class="chat-settings" onclick="resetChat()" title="Reset chat">↺</button>
+    </div>
+
+    <div class="chat-messages" id="chat-messages">
+      <div class="bubble bubble-typing" id="typing-indicator">
+        <span class="typing-dots">
+          <span>•</span><span>•</span><span>•</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="chat-input-area">
+      <div class="chat-input-box">
+        <textarea
+          id="chat-input"
+          class="chat-input"
+          placeholder="Ayo ungkapkan isi hatimu."
+          rows="1"
+          onkeydown="handleKey(event)"
+          oninput="autoResize(this)"
+        ></textarea>
+        <div class="chat-input-icons">
+          <span>🖼</span>
+          <span>&lt;/&gt;</span>
+          <span>🎤</span>
+        </div>
+        <button class="chat-send" id="send-btn" onclick="sendMessage()">↑</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ===================== CONFIG =====================
+  const API_URL = "http://localhost:8000"; // ganti dengan URL backend kamu kalau udah deploy
+
+  // ===================== STATE =====================
+  let userName = "";
+  let sessionId = crypto.randomUUID();
+  let isWaiting = false;
+
+  // ===================== NAVIGATION =====================
+  function showScreen(name) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+    document.getElementById('screen-' + name).classList.remove('hidden');
+  }
+
+  function startChat() {
+    const val = document.getElementById('input-name').value.trim();
+    if (!val) {
+      document.getElementById('input-name').focus();
+      return;
+    }
+    userName = val;
+    sessionId = crypto.randomUUID(); // fresh session tiap mulai
+    showScreen('chat');
+    sendWelcome();
+  }
+
+  // ===================== CHAT =====================
+  function sendWelcome() {
+    // Kirim pesan pembuka dari Joy tanpa nunggu user
+    addBubble(`heyy ${userName} 👋 aku Joy, seneng banget bisa ngobrol sama kamu. lagi gimana hari ini?`, 'joy');
+  }
+
+  function addBubble(text, sender) {
+    const msgs = document.getElementById('chat-messages');
+    const typing = document.getElementById('typing-indicator');
+
+    const div = document.createElement('div');
+    div.className = `bubble bubble-${sender}`;
+    div.textContent = text;
+
+    msgs.insertBefore(div, typing);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function setTyping(show) {
+    const el = document.getElementById('typing-indicator');
+    const msgs = document.getElementById('chat-messages');
+    el.classList.toggle('visible', show);
+    if (show) msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  async function sendMessage() {
+    if (isWaiting) return;
+    const input = document.getElementById('chat-input');
+    const text = input.value.trim();
+    if (!text) return;
+
+    input.value = '';
+    autoResize(input);
+    addBubble(text, 'user');
+
+    isWaiting = true;
+    document.getElementById('send-btn').disabled = true;
+    setTyping(true);
+
+    try {
+      const res = await fetch(`${API_URL}/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          session_id: sessionId,
+          name: userName,
+          message: text
+        })
+      });
+
+      if (!res.ok) throw new Error('server error');
+      const data = await res.json();
+      setTyping(false);
+      addBubble(data.reply, 'joy');
+
+    } catch (err) {
+      setTyping(false);
+      addBubble("sorry, ada gangguan bentar, coba lagi ya", 'joy');
+      console.error(err);
+    } finally {
+      isWaiting = false;
+      document.getElementById('send-btn').disabled = false;
+      input.focus();
+    }
+  }
+
+  async function resetChat() {
+    try {
+      await fetch(`${API_URL}/reset`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ session_id: sessionId })
+      });
+    } catch(e) {}
+
+    sessionId = crypto.randomUUID();
+    const msgs = document.getElementById('chat-messages');
+    const typing = document.getElementById('typing-indicator');
+    // Hapus semua bubble kecuali typing indicator
+    [...msgs.children].forEach(el => {
+      if (el !== typing) el.remove();
+    });
+    setTyping(false);
+    sendWelcome();
+  }
+
+  function handleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  }
+
+  function autoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+  }
+</script>
+
+</body>
+</html>
