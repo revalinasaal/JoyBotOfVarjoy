@@ -3,15 +3,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from groq import Groq
-from dotenv import load_dotenv
-
-# 1. Load file rahasia .env
-load_dotenv()
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 app = FastAPI()
 
-# 2. Aktifin CORS biar Frontend (index.html) bisa konek ke Backend ini
+# 1. Aktifkan CORS agar Frontend (GitHub Pages) bisa tersambung lancar
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -20,7 +15,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Inisialisasi client Groq pake key rahasia
+# 2. Ambil API Key langsung dari sistem Environment Vercel secara aman
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
+
+# 3. Inisialisasi client Groq
 client = Groq(api_key=GROQ_API_KEY)
 
 class ChatRequest(BaseModel):
@@ -35,4 +33,5 @@ async def chat_endpoint(request: ChatRequest):
         )
         return {"reply": completion.choices[0].message.content}
     except Exception as e:
+        # Jika ada error internal dari Groq, kembalikan status HTTP 500 agar frontend tahu
         return {"reply": f"Waduh, ada error nih: {str(e)}"}
