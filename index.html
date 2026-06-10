@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Yellowtail&display=swap" rel="stylesheet">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Varjoy — Open your mind</title>
@@ -24,26 +27,36 @@
     }
 
     body {
-      font-family: 'Nunito', sans-serif;
-      background: #f0e8ff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
+        font-family: 'Nunito', sans-serif;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        overflow: hidden;
     }
 
-    /* Phone frame wrapper */
     .phone {
-      width: 375px;
-      height: 780px;
-      background: var(--white);
-      border-radius: 40px;
-      overflow: hidden;
-      position: relative;
-      box-shadow: 0 30px 80px rgba(59,31,110,0.25);
+        width: 100%;
+        max-width: 393px;
+        height: 100dvh;
+        background: var(--white);
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        flex-direction: column;
     }
 
-    /* ===================== SCREENS ===================== */
+    @media (min-width:768px){
+      body { background:#f0e8ff; }
+      .phone {
+        max-width:393px;
+        height:100dvh;
+        border-radius:40px;
+        box-shadow:0 30px 80px rgba(59,31,110,.25);
+      }
+    }
+
     .screen {
       position: absolute;
       inset: 0;
@@ -57,13 +70,14 @@
 
     /* ===================== LANDING ===================== */
     #screen-landing {
-      background: linear-gradient(170deg, #7B4FBF 0%, #4A2580 50%, #3B1F6E 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-      padding: 40px 24px 48px;
+        background: #AAB2D8;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        padding: 40px 24px;
+        overflow: hidden;
     }
 
     .landing-rays {
@@ -72,36 +86,21 @@
       height: 55%;
       overflow: hidden;
     }
-    .landing-rays svg {
-      width: 100%;
-      height: 100%;
-    }
-
-    .landing-content {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      margin-top: 40px;
-    }
+    .landing-rays svg { width: 100%; height: 100%; }
 
     .landing-headline {
-      color: var(--white);
-      font-size: 18px;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-      margin-bottom: 4px;
+        font-size:20px;
+        font-weight:800;
+        color:white;
+        margin-bottom:-8px;
     }
 
     .landing-logo {
-      font-family: 'Pacifico', cursive;
-      font-size: 52px;
-      color: var(--yellow);
-      line-height: 1.1;
-      margin-bottom: 32px;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        font-family:'Yellowtail', cursive;
+        font-size:95px;
+        color:#F5D97A;
+        position:relative;
+        top:10px;
     }
 
     .btn-start {
@@ -120,32 +119,80 @@
     .btn-start:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.2); }
     .btn-start:active { transform: translateY(0); }
 
-    /* Character illustration placeholder */
     .landing-character {
-      position: absolute;
-      bottom: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 180px;
-      height: 200px;
-      z-index: 1;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 140%;
+        max-width: 600px;
+        height: auto;
+        z-index: 1;
+        pointer-events: none;
     }
+
+    .landing-top {
+        position:absolute;
+        top:20px;
+        left:50%;
+        transform:translateX(-50%);
+        text-align:center;
+        z-index:5;
+        width:100%;
+    }
+
+    .landing-center {
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        width:100%;
+        margin-top:-40px;
+    }
+
+    .landing-bottom {
+        position:absolute;
+        left:50%;
+        transform:translateX(-50%);
+        z-index:10;
+        top: 30%;
+    }
+
+    .landing-headline {
+        font-size:20px;
+        font-weight:800;
+        color:white;
+        margin-bottom:6px;
+    }
+
+    .landing-logo {
+        font-family:'Yellowtail', cursive;
+        font-size:72px;
+        color:#F5D97A;
+        line-height:1;
+        text-shadow:0 4px 8px rgba(0,0,0,.2);
+        margin-bottom:0;
+    }
+
+    .btn-start { width:230px; height:52px; font-size:18px; }
 
     /* ===================== NAME INPUT ===================== */
     #screen-name {
-      background: linear-gradient(160deg, #EDE4F8 0%, #FDF8FF 60%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 48px 32px;
-      gap: 24px;
+        background:#FDF3C8;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        padding:24px;
     }
 
-    .name-emoji {
-      font-size: 56px;
-      line-height: 1;
+    .name-card {
+        background:rgb(123, 181, 149);
+        width:100%;
+        border-radius:32px;
+        padding:32px 24px;
+        box-shadow: 0 10px 30px rgba(0,0,0,.08);
     }
+
+    .name-emoji { font-size: 56px; line-height: 1; }
 
     .name-title {
       font-size: 26px;
@@ -178,12 +225,21 @@
     .name-input:focus { border-color: var(--purple-mid); }
     .name-input::placeholder { color: #bbb; font-weight: 400; }
 
+    .name-avatar {
+        width:90px;
+        height:90px;
+        border-radius:24px;
+        object-fit:cover;
+        margin-bottom:16px;
+        padding:18px 24px;
+    }
+
     .btn-continue {
       width: 100%;
-      background: var(--purple-mid);
+      background: #6B3FA0;
       color: var(--white);
       border: none;
-      border-radius: 16px;
+      border-radius: 999px;
       padding: 16px;
       font-family: 'Nunito', sans-serif;
       font-size: 16px;
@@ -199,16 +255,18 @@
       background: var(--yellow-bg);
       display: flex;
       flex-direction: column;
+      height: 100%;
+      min-height: 0;
     }
 
     .chat-header {
-      background: var(--yellow-bg);
-      padding: 20px 20px 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border-bottom: 1px solid rgba(245,217,122,0.6);
-      flex-shrink: 0;
+        background: #F5E08C;
+        padding: 18px 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border-bottom: 1px solid rgba(0,0,0,.05);
+        flex-shrink: 0;
     }
 
     .chat-back {
@@ -223,14 +281,11 @@
     }
 
     .chat-avatar {
-      width: 36px;
-      height: 36px;
-      background: var(--purple-mid);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid white;
     }
 
     .chat-name {
@@ -250,6 +305,8 @@
 
     .chat-messages {
       flex: 1;
+      min-height: 0;
+      -webkit-overflow-scrolling: touch;
       overflow-y: auto;
       padding: 20px 16px;
       display: flex;
@@ -261,27 +318,27 @@
     .chat-messages::-webkit-scrollbar { width: 0; }
 
     .bubble {
-      max-width: 78%;
-      padding: 12px 16px;
-      border-radius: 18px;
-      font-size: 14px;
-      line-height: 1.55;
-      font-weight: 600;
-      word-break: break-word;
+        max-width: 75%;
+        padding: 12px 16px;
+        border-radius: 18px;
+        font-size: 13px;
+        line-height: 1.6;
+        font-weight: 600;
+        word-break: break-word;
+        box-shadow: 0 2px 10px rgba(0,0,0,.05);
     }
 
     .bubble-joy {
-      background: var(--bubble-joy);
-      color: var(--text-dark);
-      align-self: flex-start;
-      border-bottom-left-radius: 4px;
+        background: #B89BE2;
+        color: white;
+        border-bottom-left-radius:6px;
     }
 
     .bubble-user {
       background: var(--bubble-user);
       color: var(--text-dark);
       align-self: flex-end;
-      border-bottom-right-radius: 4px;
+      border-bottom-right-radius: 6px;
     }
 
     .bubble-typing {
@@ -317,13 +374,13 @@
     }
 
     .chat-input-box {
-      background: var(--white);
-      border-radius: 20px;
-      padding: 10px 16px;
-      display: flex;
-      align-items: flex-end;
-      gap: 10px;
-      box-shadow: 0 2px 12px rgba(107,63,160,0.08);
+        background: white;
+        border-radius: 30px;
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 4px 16px rgba(107,63,160,.08);
     }
 
     .chat-input {
@@ -339,20 +396,39 @@
       max-height: 100px;
       line-height: 1.5;
     }
+
     .chat-input::placeholder { color: #bbb; font-weight: 400; }
 
-    .chat-input-icons {
+    /* Mic button */
+    .btn-mic {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
       color: var(--text-mid);
-      font-size: 16px;
-      padding-bottom: 2px;
+      font-size: 18px;
+      transition: color 0.2s, transform 0.15s;
+      flex-shrink: 0;
+    }
+
+    .btn-mic:hover { color: var(--purple-mid); }
+
+    .btn-mic.recording {
+      color: #e53935;
+      animation: pulse-mic 1s infinite;
+    }
+
+    @keyframes pulse-mic {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
     }
 
     .chat-send {
-      width: 36px;
-      height: 36px;
+      width: 42px;
+      height: 42px;
       background: var(--purple-mid);
       border: none;
       border-radius: 50%;
@@ -365,9 +441,29 @@
       flex-shrink: 0;
       transition: background 0.2s, transform 0.15s;
     }
+
     .chat-send:hover { background: var(--purple-dark); transform: scale(1.05); }
     .chat-send:active { transform: scale(0.95); }
     .chat-send:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+
+    .chat-user-info {
+        flex:1;
+        display:flex;
+        flex-direction:column;
+    }
+
+    .chat-title {
+        font-size:18px;
+        font-weight:800;
+        color:var(--text-dark);
+    }
+
+    .chat-subtitle {
+        font-size:12px;
+        color:var(--text-mid);
+        font-weight:600;
+    }
+
   </style>
 </head>
 <body>
@@ -376,75 +472,47 @@
 
   <!-- ===== LANDING ===== -->
   <div id="screen-landing" class="screen">
-    <!-- rays background -->
-    <div class="landing-rays">
-      <svg viewBox="0 0 375 430" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="187,420 80,0 130,0" fill="rgba(255,255,255,0.06)"/>
-        <polygon points="187,420 140,0 190,0" fill="rgba(255,255,255,0.05)"/>
-        <polygon points="187,420 200,0 250,0" fill="rgba(255,255,255,0.06)"/>
-        <polygon points="187,420 260,0 320,0" fill="rgba(255,255,255,0.04)"/>
-        <polygon points="187,420 30,0 80,0"  fill="rgba(255,255,255,0.04)"/>
-      </svg>
+    <div class="landing-top">
+        <p class="landing-headline">Open your mind with</p>
+        <h1 class="landing-logo">Varjoy</h1>
     </div>
 
-    <!-- character SVG illustration -->
-    <svg class="landing-character" viewBox="0 0 180 220" xmlns="http://www.w3.org/2000/svg">
-      <!-- body/shoulders -->
-      <ellipse cx="90" cy="210" rx="55" ry="20" fill="#F5D97A" opacity="0.3"/>
-      <!-- shirt -->
-      <path d="M55 160 Q90 145 125 160 L130 220 L50 220 Z" fill="#F5D97A"/>
-      <!-- neck -->
-      <rect x="78" y="135" width="24" height="22" rx="8" fill="#FADADD"/>
-      <!-- head -->
-      <ellipse cx="90" cy="118" rx="38" ry="40" fill="#FADADD"/>
-      <!-- hair -->
-      <path d="M52 110 Q55 70 90 65 Q125 70 128 110 Q118 85 90 82 Q62 85 52 110Z" fill="#3D2314"/>
-      <ellipse cx="90" cy="66" rx="30" ry="10" fill="#3D2314"/>
-      <!-- open brain top -->
-      <path d="M58 95 Q60 72 90 68 Q120 72 122 95" fill="none" stroke="#C4A8E8" stroke-width="3"/>
-      <!-- mind stuff coming out -->
-      <path d="M75 80 Q70 40 60 20 Q80 35 90 15 Q100 35 120 20 Q110 40 105 80"
-            fill="#C4A8E8" opacity="0.9"/>
-      <path d="M80 75 Q76 50 68 30" fill="none" stroke="#F5D97A" stroke-width="4" stroke-linecap="round"/>
-      <path d="M100 75 Q104 50 112 30" fill="none" stroke="#F5D97A" stroke-width="4" stroke-linecap="round"/>
-      <!-- eyes -->
-      <ellipse cx="78" cy="115" rx="5" ry="6" fill="#3D2314"/>
-      <ellipse cx="102" cy="115" rx="5" ry="6" fill="#3D2314"/>
-      <circle cx="80" cy="113" r="1.5" fill="white"/>
-      <circle cx="104" cy="113" r="1.5" fill="white"/>
-      <!-- smile -->
-      <path d="M80 128 Q90 136 100 128" fill="none" stroke="#3D2314" stroke-width="2.5" stroke-linecap="round"/>
-    </svg>
+    <div class="landing-center">
+        <img src="homeVarjoy.png" class="landing-character" alt="Varjoy" />
+    </div>
 
-    <div class="landing-content">
-      <p class="landing-headline">Open your mind with</p>
-      <h1 class="landing-logo">Varjoy</h1>
-      <button class="btn-start" onclick="showScreen('name')">Get Started</button>
+    <div class="landing-bottom">
+        <button class="btn-start" onclick="showScreen('name')">Get Started</button>
     </div>
   </div>
 
   <!-- ===== NAME INPUT ===== -->
   <div id="screen-name" class="screen hidden">
-    <div class="name-emoji">👋</div>
-    <h2 class="name-title">Heyy, siapa namamu?</h2>
-    <p class="name-subtitle">Joy pengen kenal kamu lebih deket.<br>Boleh tau namamu?</p>
-    <input
-      id="input-name"
-      class="name-input"
-      type="text"
-      placeholder="Tulis namamu di sini..."
-      maxlength="30"
-      autocomplete="off"
-    />
-    <button class="btn-continue" onclick="startChat()">Mulai ngobrol sama Joy →</button>
+    <div class="name-card">
+        <div class="name-emoji">🐻</div>
+        <h2 class="name-title">heyy! nama kamu siapaaa? 🐻</h2>
+        <p class="name-subtitle">Joy pengen kenalan dulu sebelum nemenin hari kamu 💛</p>
+        <input
+          id="input-name"
+          class="name-input"
+          type="text"
+          placeholder="Aku manggil kamu siapa nih? 🌷"
+          maxlength="30"
+          autocomplete="off"
+        />
+        <button class="btn-continue" onclick="startChat()">Mulai ngobrol sama Joy →</button>
+    </div>
   </div>
 
   <!-- ===== CHAT ===== -->
   <div id="screen-chat" class="screen hidden">
     <div class="chat-header">
       <button class="chat-back" onclick="showScreen('landing')">←</button>
-      <div class="chat-avatar">🐾</div>
-      <span class="chat-name">Joy</span>
+      <img src="bruanagJOY.png" class="chat-avatar" alt="Joy" />
+      <div class="chat-user-info">
+          <div class="chat-title">Joy</div>
+          <div class="chat-subtitle" id="chat-greeting">Hi 👋</div>
+      </div>
       <button class="chat-settings" onclick="resetChat()" title="Reset chat">↺</button>
     </div>
 
@@ -461,16 +529,17 @@
         <textarea
           id="chat-input"
           class="chat-input"
-          placeholder="Ayo ungkapkan isi hatimu."
+          placeholder="Ayo ceritaaa"
           rows="1"
           onkeydown="handleKey(event)"
           oninput="autoResize(this)"
         ></textarea>
-        <div class="chat-input-icons">
-          <span>🖼</span>
-          <span>&lt;/&gt;</span>
-          <span>🎤</span>
-        </div>
+
+        <!-- Mic button -->
+        <button class="btn-mic" id="mic-btn" onclick="toggleMic()" title="Voice input">
+          <img src="Icon_Button-2.png" alt="mic" style="width: 30px;height:34px;object-fit:contain;mix-blend-mode:multiply;" id="mic-icon" />
+        </button>
+
         <button class="chat-send" id="send-btn" onclick="sendMessage()">↑</button>
       </div>
     </div>
@@ -479,13 +548,85 @@
 </div>
 
 <script>
-  // ===================== CONFIG =====================
-  const API_URL = "https://varjoy-web.vercel.app";
+  const API_URL = "";
 
-  // ===================== STATE =====================
   let userName = "";
   let sessionId = crypto.randomUUID();
   let isWaiting = false;
+
+  // ===================== SPEECH RECOGNITION =====================
+  let recognition = null;
+  let isRecording = false;
+
+  function initSpeechRecognition() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) return null;
+
+    const rec = new SpeechRecognition();
+    rec.lang = 'id-ID';
+    rec.continuous = false;
+    rec.interimResults = true;
+
+    rec.onstart = () => {
+      isRecording = true;
+      const btn = document.getElementById('mic-btn');
+      btn.classList.add('recording');
+      btn.title = 'Tap untuk stop';
+      document.getElementById('chat-input').placeholder = 'Dengerin kamu...';
+    };
+
+    rec.onresult = (e) => {
+      const transcript = Array.from(e.results)
+        .map(r => r[0].transcript)
+        .join('');
+      const input = document.getElementById('chat-input');
+      input.value = transcript;
+      autoResize(input);
+    };
+
+    rec.onend = () => {
+      isRecording = false;
+      const btn = document.getElementById('mic-btn');
+      btn.classList.remove('recording');
+      btn.title = 'Voice input';
+      document.getElementById('chat-input').placeholder = 'Ayo ceritaaa';
+
+      // Auto send kalau ada teks hasil voice
+      const text = document.getElementById('chat-input').value.trim();
+      if (text) sendMessage();
+    };
+
+    rec.onerror = (e) => {
+      isRecording = false;
+      const btn = document.getElementById('mic-btn');
+      btn.classList.remove('recording');
+      btn.title = 'Voice input';
+      document.getElementById('chat-input').placeholder = 'Ayo ceritaaa';
+
+      if (e.error === 'not-allowed') {
+        addBubble("izin mikrofon ditolak, coba allow dulu di browser yaa", 'joy');
+      }
+    };
+
+    return rec;
+  }
+
+  function toggleMic() {
+    if (!recognition) {
+      recognition = initSpeechRecognition();
+    }
+
+    if (!recognition) {
+      addBubble("browser kamu kayaknya ga support voice input dehh, coba pake Chrome yaa", 'joy');
+      return;
+    }
+
+    if (isRecording) {
+      recognition.stop();
+    } else {
+      recognition.start();
+    }
+  }
 
   // ===================== NAVIGATION =====================
   function showScreen(name) {
@@ -499,15 +640,18 @@
       document.getElementById('input-name').focus();
       return;
     }
+
     userName = val;
-    sessionId = crypto.randomUUID(); // fresh session tiap mulai
+    localStorage.setItem("userName", userName);
+    document.getElementById("chat-greeting").textContent = `Hi ${userName} 👋`;
+    sessionId = crypto.randomUUID();
+
     showScreen('chat');
     sendWelcome();
   }
 
   // ===================== CHAT =====================
   function sendWelcome() {
-    // Kirim pesan pembuka dari Joy tanpa nunggu user
     addBubble(`heyy ${userName} 👋 aku Joy, seneng banget bisa ngobrol sama kamu. lagi gimana hari ini?`, 'joy');
   }
 
@@ -583,7 +727,6 @@
     sessionId = crypto.randomUUID();
     const msgs = document.getElementById('chat-messages');
     const typing = document.getElementById('typing-indicator');
-    // Hapus semua bubble kecuali typing indicator
     [...msgs.children].forEach(el => {
       if (el !== typing) el.remove();
     });
@@ -602,6 +745,39 @@
     el.style.height = 'auto';
     el.style.height = Math.min(el.scrollHeight, 100) + 'px';
   }
+
+  window.visualViewport?.addEventListener("resize", () => {
+    const msgs = document.getElementById("chat-messages");
+    if (msgs) msgs.scrollTop = msgs.scrollHeight;
+  });
+
+  document.addEventListener("focusin", () => {
+    setTimeout(() => {
+      const msgs = document.getElementById("chat-messages");
+      if (msgs) msgs.scrollTop = msgs.scrollHeight;
+    }, 300);
+  });
+
+  window.addEventListener("load", () => {
+    const savedName = localStorage.getItem("userName");
+    if (savedName) {
+      userName = savedName;
+      document.getElementById("chat-greeting").textContent = `Hi ${savedName} 👋`;
+      showScreen("chat");
+      sendWelcome();
+    }
+  });
+
+  function fixViewport() {
+    const vh = window.visualViewport
+      ? window.visualViewport.height
+      : window.innerHeight;
+    document.querySelector(".phone").style.height = vh + "px";
+  }
+
+  fixViewport();
+  window.addEventListener("resize", fixViewport);
+  window.visualViewport?.addEventListener("resize", fixViewport);
 </script>
 
 </body>

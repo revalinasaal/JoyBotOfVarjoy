@@ -1,18 +1,17 @@
 {
-  "version": 2,
   "builds": [
-    {
-      "src": "main.py",
-      "use": "@vercel/python"
-    }
+    { "src": "main.py", "use": "@vercel/python" },
+    { "src": "index.html", "use": "@vercel/static" },
+    { "src": "homeVarjoy.png", "use": "@vercel/static" },
+    { "src": "bruanagJOY.png", "use": "@vercel/static" },
+    { "src": "Icon_Button-2.png", "use": "@vercel/static" }
   ],
   "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "main.py"
-    }
-  ],
-  "env": {
-    "GROQ_API_KEY": ""
-  }
+    { "src": "/chat", "dest": "main.py" },
+    { "src": "/reset", "dest": "main.py" },
+    { "src": "/homeVarjoy.png", "dest": "homeVarjoy.png" },
+    { "src": "/bruanagJOY.png", "dest": "bruanagJOY.png" },
+    { "src": "/Icon_Button-2.png", "dest": "Icon_Button-2.png" },
+    { "src": "/(.*)", "dest": "index.html" }
+  ]
 }
