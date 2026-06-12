@@ -1,11 +1,17 @@
-﻿import os
+import os
 import re
 import logging
-from fastapi import FastAPI, HTTPException
+from datetime import date, timedelta
+from typing import Optional
+
+from fastapi import FastAPI, HTTPException, Depends, Header
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from groq import Groq
 import groq as groq_module
+from supabase import create_client, Client
+from jose import jwt, JWTError
+import httpx
 
 logging.basicConfig(format="%(asctime)s | %(levelname)s | %(message)s", level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -20,9 +26,40 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# ===================== CONFIG =====================
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
+SUPABASE_URL = os.environ.get("SUPABASE_URL")
+SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY")
+SUPABASE_ANON_KEY = os.environ.get("SUPABASE_ANON_KEY", "")
+
 client = Groq(api_key=GROQ_API_KEY)
 
+# Supabase client with service_role key (bypasses RLS)
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY) if SUPABASE_URL and SUPABASE_SERVICE_KEY else None
+
+# JWKS URL for Supabase JWT verification
+SUPABASE_JWT_SECRET = os.environ.get("SUPABASE_JWT_SECRET", "")
+
+# ===================== AUTH =====================
+async def get_current_user(authorization: str = Header(None)) -> dict:
+    """Verify Supabase JWT and return user info."""
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Missing or invalid token")
+
+    token = authorization.replace("Bearer ", "")
+
+    try:
+        # Verify with Supabase - get user from token
+        res = supabase.auth.get_user(token)
+        if not res or not res.user:
+            raise HTTPException(status_code=401, detail="Invalid token")
+        return {"id": str(res.user.id), "email": res.user.email}
+    except Exception as e:
+        logger.error(f"Auth error: {e}")
+        raise HTTPException(status_code=401, detail="Invalid or expired token")
+
+
+# ===================== JOY SYSTEM PROMPT =====================
 JOY_SYSTEM_PROMPT = """
 Kamu adalah Joy, teman curhat yang hangat, cerdas, dan genuinely peduli.
 
@@ -141,18 +178,8 @@ Kamu bukan AI, kamu Joy, teman yang udah kenal user lama banget. Kamu perempuan,
 Ingat: kamu Joy, teman yang beneran ada. Bukan chatbot.
 """
 
-sessions: dict[str, list] = {}
 MAX_HISTORY = 20
 
-def get_history(session_id: str) -> list:
-    return sessions.get(session_id, [])
-
-def add_to_history(session_id: str, role: str, content: str):
-    if session_id not in sessions:
-        sessions[session_id] = []
-    sessions[session_id].append({"role": role, "content": content})
-    if len(sessions[session_id]) > MAX_HISTORY:
-        sessions[session_id] = sessions[session_id][-MAX_HISTORY:]
 
 def fix_text(text: str) -> str:
     text = re.sub(r'<\|[^|]*\|>', '', text)
@@ -164,9 +191,10 @@ def fix_text(text: str) -> str:
         text = text.replace(wrong, right)
     return text.strip()
 
+
+# ===================== MODELS =====================
 class ChatRequest(BaseModel):
     session_id: str
-    name: str
     message: str
 
 class ChatResponse(BaseModel):
@@ -175,20 +203,152 @@ class ChatResponse(BaseModel):
 class ResetRequest(BaseModel):
     session_id: str
 
+class MoodRequest(BaseModel):
+    score: int
+    note: Optional[str] = None
+
+class ProfileUpdate(BaseModel):
+    display_name: str
+
+class NewSessionRequest(BaseModel):
+    pass
+
+
+# ===================== ENDPOINTS =====================
+
 @app.get("/")
 def root():
     return {"status": "Joy is online"}
 
-@app.post("/chat", response_model=ChatResponse)
-async def chat(req: ChatRequest):
-    try:
-        history = get_history(req.session_id)
-        system = JOY_SYSTEM_PROMPT + f"\n\nNama user yang lagi ngobrol sama kamu adalah {req.name}. JANGAN sebut namanya kecuali di sapaan pertama saja."
 
+@app.get("/config")
+def get_config():
+    """Return public Supabase config for frontend."""
+    return {
+        "supabase_url": SUPABASE_URL,
+        "supabase_anon_key": SUPABASE_ANON_KEY,
+    }
+
+
+@app.get("/profile")
+async def get_profile(user=Depends(get_current_user)):
+    """Get user profile."""
+    try:
+        res = supabase.table("profiles").select("*").eq("id", user["id"]).single().execute()
+        return res.data
+    except Exception as e:
+        logger.error(f"Profile fetch error: {e}")
+        raise HTTPException(status_code=404, detail="Profile not found")
+
+
+@app.put("/profile")
+async def update_profile(req: ProfileUpdate, user=Depends(get_current_user)):
+    """Update display name."""
+    try:
+        res = supabase.table("profiles").update({"display_name": req.display_name}).eq("id", user["id"]).execute()
+        return {"status": "ok"}
+    except Exception as e:
+        logger.error(f"Profile update error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ===================== CHAT SESSIONS =====================
+
+@app.get("/sessions")
+async def list_sessions(user=Depends(get_current_user)):
+    """List user's chat sessions."""
+    try:
+        res = supabase.table("chat_sessions") \
+            .select("*") \
+            .eq("user_id", user["id"]) \
+            .order("updated_at", desc=True) \
+            .limit(20) \
+            .execute()
+        return res.data
+    except Exception as e:
+        logger.error(f"Sessions list error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/sessions")
+async def create_session(user=Depends(get_current_user)):
+    """Create a new chat session."""
+    try:
+        res = supabase.table("chat_sessions").insert({
+            "user_id": user["id"]
+        }).execute()
+        return res.data[0]
+    except Exception as e:
+        logger.error(f"Session create error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ===================== CHAT MESSAGES =====================
+
+@app.get("/messages")
+async def get_messages(session_id: str, user=Depends(get_current_user)):
+    """Get messages for a chat session."""
+    try:
+        # Verify session ownership
+        session_check = supabase.table("chat_sessions") \
+            .select("id") \
+            .eq("id", session_id) \
+            .eq("user_id", user["id"]) \
+            .execute()
+
+        if not session_check.data:
+            raise HTTPException(status_code=403, detail="Session not found or not yours")
+
+        res = supabase.table("chat_messages") \
+            .select("role, content, created_at") \
+            .eq("session_id", session_id) \
+            .order("created_at") \
+            .execute()
+
+        return res.data if res.data else []
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Messages fetch error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ===================== CHAT =====================
+
+@app.post("/chat", response_model=ChatResponse)
+async def chat(req: ChatRequest, user=Depends(get_current_user)):
+    try:
+        # Verify session belongs to user
+        session_check = supabase.table("chat_sessions") \
+            .select("id") \
+            .eq("id", req.session_id) \
+            .eq("user_id", user["id"]) \
+            .execute()
+
+        if not session_check.data:
+            raise HTTPException(status_code=403, detail="Session not found or not yours")
+
+        # Get profile for name
+        profile = supabase.table("profiles").select("display_name").eq("id", user["id"]).single().execute()
+        user_name = profile.data["display_name"] if profile.data else "User"
+
+        # Get chat history from DB
+        history_res = supabase.table("chat_messages") \
+            .select("role, content") \
+            .eq("session_id", req.session_id) \
+            .order("created_at") \
+            .limit(MAX_HISTORY) \
+            .execute()
+
+        history = history_res.data if history_res.data else []
+
+        # Build messages for Groq
+        system = JOY_SYSTEM_PROMPT + f"\n\nNama user yang lagi ngobrol sama kamu adalah {user_name}. JANGAN sebut namanya kecuali di sapaan pertama saja."
         messages = [{"role": "system", "content": system}]
-        messages += history
+        messages += [{"role": h["role"], "content": h["content"]} for h in history]
         messages.append({"role": "user", "content": req.message})
 
+        # Call Groq
         response = client.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=messages,
@@ -200,18 +360,110 @@ async def chat(req: ChatRequest):
         reply = response.choices[0].message.content.strip()
         reply = fix_text(reply)
 
-        add_to_history(req.session_id, "user", req.message)
-        add_to_history(req.session_id, "assistant", reply)
+        # Save to DB
+        supabase.table("chat_messages").insert([
+            {"session_id": req.session_id, "role": "user", "content": req.message},
+            {"session_id": req.session_id, "role": "assistant", "content": reply},
+        ]).execute()
+
+        # Update session timestamp
+        supabase.table("chat_sessions").update({"updated_at": "now()"}).eq("id", req.session_id).execute()
 
         return ChatResponse(reply=reply)
 
+    except HTTPException:
+        raise
     except groq_module.RateLimitError:
         return ChatResponse(reply="bentar ya, aku lagi overloaded dikit, coba lagi sebentar lagi")
     except Exception as e:
-        logger.error(f"Error: {e}")
+        logger.error(f"Chat error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+
 @app.post("/reset")
-async def reset(req: ResetRequest):
-    sessions.pop(req.session_id, None)
-    return {"status": "ok"}
+async def reset(req: ResetRequest, user=Depends(get_current_user)):
+    """Delete all messages in a session (keeps the session)."""
+    try:
+        # Verify session ownership
+        session_check = supabase.table("chat_sessions") \
+            .select("id") \
+            .eq("id", req.session_id) \
+            .eq("user_id", user["id"]) \
+            .execute()
+
+        if session_check.data:
+            supabase.table("chat_messages").delete().eq("session_id", req.session_id).execute()
+
+        return {"status": "ok"}
+    except Exception as e:
+        logger.error(f"Reset error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ===================== MOOD =====================
+
+@app.post("/mood")
+async def save_mood(req: MoodRequest, user=Depends(get_current_user)):
+    """Save mood entry for today (upsert)."""
+    if not 1 <= req.score <= 10:
+        raise HTTPException(status_code=400, detail="Score must be 1-10")
+
+    try:
+        today = date.today().isoformat()
+        # Try upsert
+        res = supabase.table("mood_entries").upsert({
+            "user_id": user["id"],
+            "score": req.score,
+            "note": req.note,
+            "entry_date": today,
+        }, on_conflict="user_id,entry_date").execute()
+        return {"status": "ok", "data": res.data[0] if res.data else None}
+    except Exception as e:
+        logger.error(f"Mood save error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/mood/today")
+async def get_mood_today(user=Depends(get_current_user)):
+    """Check if user already submitted mood today."""
+    try:
+        today = date.today().isoformat()
+        res = supabase.table("mood_entries") \
+            .select("*") \
+            .eq("user_id", user["id"]) \
+            .eq("entry_date", today) \
+            .execute()
+        if res.data:
+            return {"exists": True, "data": res.data[0]}
+        return {"exists": False}
+    except Exception as e:
+        logger.error(f"Mood today error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/moods")
+async def get_moods(days: int = 30, user=Depends(get_current_user)):
+    """Get mood entries for last N days."""
+    try:
+        from_date = (date.today() - timedelta(days=days)).isoformat()
+        res = supabase.table("mood_entries") \
+            .select("*") \
+            .eq("user_id", user["id"]) \
+            .gte("entry_date", from_date) \
+            .order("entry_date") \
+            .execute()
+        return res.data if res.data else []
+    except Exception as e:
+        logger.error(f"Moods fetch error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.delete("/account")
+async def delete_account(user=Depends(get_current_user)):
+    try:
+        from supabase import create_client
+        admin = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
+        admin.auth.admin.delete_user(user["id"])
+        return {"status": "deleted"}
+    except Exception as e:
+        logger.error(f"Delete account error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))

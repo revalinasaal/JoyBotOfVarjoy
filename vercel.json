@@ -1,17 +1,78 @@
 {
   "builds": [
-    { "src": "main.py", "use": "@vercel/python" },
-    { "src": "index.html", "use": "@vercel/static" },
-    { "src": "homeVarjoy.png", "use": "@vercel/static" },
-    { "src": "bruanagJOY.png", "use": "@vercel/static" },
-    { "src": "Icon_Button-2.png", "use": "@vercel/static" }
+    {
+      "src": "main.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "css/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "js/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "assets/**",
+      "use": "@vercel/static"
+    }
   ],
   "routes": [
-    { "src": "/chat", "dest": "main.py" },
-    { "src": "/reset", "dest": "main.py" },
-    { "src": "/homeVarjoy.png", "dest": "homeVarjoy.png" },
-    { "src": "/bruanagJOY.png", "dest": "bruanagJOY.png" },
-    { "src": "/Icon_Button-2.png", "dest": "Icon_Button-2.png" },
-    { "src": "/(.*)", "dest": "index.html" }
+    {
+      "src": "/config",
+      "dest": "main.py"
+    },
+    {
+      "src": "/chat",
+      "dest": "main.py"
+    },
+    {
+      "src": "/reset",
+      "dest": "main.py"
+    },
+    {
+      "src": "/sessions",
+      "dest": "main.py"
+    },
+    {
+      "src": "/messages",
+      "dest": "main.py"
+    },
+    {
+      "src": "/profile",
+      "dest": "main.py"
+    },
+    {
+      "src": "/mood(.*)",
+      "dest": "main.py"
+    },
+    {
+      "src": "/moods(.*)",
+      "dest": "main.py"
+    },
+    {
+      "src": "/css/(.*)",
+      "dest": "css/$1"
+    },
+    {
+      "src": "/js/(.*)",
+      "dest": "js/$1"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "assets/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "index.html"
+    },
+    {
+      "src": "/account",
+      "dest": "main.py"
+    }
   ]
 }
