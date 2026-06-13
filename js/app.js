@@ -37,16 +37,17 @@ async function initChatAfterAuth() {
 }
 
 // -- APP BOOT --
+const initialHash = window.location.hash;
+const initialSearch = window.location.search;
+
 window.addEventListener('load', async () => {
+  const searchParams = new URLSearchParams(initialSearch);
+  const isRecovery = (initialHash && initialHash.includes('type=recovery')) ||
+    searchParams.get('type') === 'recovery' ||
+    (initialHash && initialHash.includes('access_token') && initialHash.includes('recovery'));
+
   await VarjoyApp.initSupabase();
   const client = VarjoyApp.getClient();
-
-  // Cek apakah ini redirect dari reset password email
-  const hash = window.location.hash;
-  const searchParams = new URLSearchParams(window.location.search);
-  const isRecovery = (hash && hash.includes('type=recovery')) ||
-    searchParams.get('type') === 'recovery' ||
-    (hash && hash.includes('access_token') && hash.includes('recovery'));
 
   if (isRecovery) {
     // Supabase sudah set session otomatis dari hash
