@@ -5,8 +5,16 @@ const Chat = {
   isWaiting: false,
   recognition: null,
   isRecording: false,
+  _initialized: false,
 
   async init() {
+    if (this._initialized) {
+      await this.ensureSession();
+      await this.loadMessages();
+      return;
+    }
+    this._initialized = true;
+
     // Ensure we have a session
     await this.ensureSession();
 

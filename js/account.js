@@ -4,9 +4,13 @@
 
 const Account = {
   profile: null,
+  _initialized: false,
 
   async init() {
     await this.loadProfile();
+
+    if (this._initialized) return;
+    this._initialized = true;
 
     // Event listeners
     document.getElementById('account-logout-btn')?.addEventListener('click', () => this.handleLogout());
@@ -181,9 +185,13 @@ const Account = {
 // Home Dashboard Module
 // 
 const Home = {
+  _initialized: false,
   async init() {
     this.renderWelcome();
     await this.loadData();
+
+    if (this._initialized) return;
+    this._initialized = true;
 
     document.getElementById('home-log-day-btn')?.addEventListener('click', () => showScreen('log-day'));
     document.getElementById('home-mood-see-all')?.addEventListener('click', () => showScreen('mood'));
