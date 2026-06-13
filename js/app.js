@@ -203,3 +203,4 @@ function fixViewport() {
     : window.innerHeight;
   document.querySelector('.phone').style.height = vh + 'px';
 }
+

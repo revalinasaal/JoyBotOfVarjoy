@@ -13,3 +13,4 @@ for r in res.data:
     print(f"Content: {repr(r['content'])}")
     print(f"AI Feedback: {repr(r['ai_feedback'])}")
     print("---")
+

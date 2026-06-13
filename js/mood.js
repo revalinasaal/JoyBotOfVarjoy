@@ -338,3 +338,4 @@ const Mood = {
     // Trend is handled by the week preview on home screen
   }
 };
+

@@ -5,3 +5,4 @@ const fs = require('fs');
 // Wait, I can just use the config endpoint to get it or read it from the local .env.example
 // Actually let's just fetch it via curl from the API!
 
+

@@ -336,3 +336,4 @@ const Home = {
   async checkGuardianAlert(moods) {
   }
 };
+
