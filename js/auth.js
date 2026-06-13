@@ -43,17 +43,6 @@ const Auth = {
         this.showError('Gagal kirim reset email, coba lagi ya');
       }
     });
-
-    // fallback register button
-    document.getElementById('fallback-register-btn')?.addEventListener('click', () => {
-      if (this.mode === 'login') {
-        this.switchMode('register');
-        document.getElementById('fallback-register-btn').textContent = 'Sudah punya akun? Masuk';
-      } else {
-        this.switchMode('login');
-        document.getElementById('fallback-register-btn').textContent = 'Belum punya akun? Daftar';
-      }
-    });
   },
 
   switchMode(mode) {
