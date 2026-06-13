@@ -1,6 +1,4 @@
-// 
 // VARJOY — Account & Profile Module
-// 
 
 const Account = {
   profile: null,
@@ -336,6 +334,5 @@ const Home = {
   },
 
   async checkGuardianAlert(moods) {
-    // Stub to prevent error
   }
 };

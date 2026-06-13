@@ -2,15 +2,10 @@
 
 const Journal = {
   journals: [],
-  _initialized: false,
 
   init() {
-    if (this._initialized) return;
-    this._initialized = true;
-
     document.getElementById('journal-save-btn')?.addEventListener('click', () => this.saveJournal());
-    
-    // Set today's date in write screen header
+
     const dateEl = document.getElementById('journal-write-date');
     if (dateEl) {
       dateEl.textContent = this.formatDateSpecial(new Date());
@@ -90,10 +85,10 @@ const Journal = {
     try {
       await VarjoyApp.post('/journal', { content });
       VarjoyApp.showToast('Jurnal berhasil disimpan! ✨');
-      
+
       // Reset input
       input.value = '';
-      
+
       // Go back to feed
       showScreen('journal');
       await this.loadJournals();
