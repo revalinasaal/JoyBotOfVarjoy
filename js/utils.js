@@ -1,12 +1,10 @@
-// ============================================================
-// VARJOY — Supabase Client & Utilities
-// ============================================================
+// -- VARJOY — Supabase Client & Utilities --
 
 let _supabaseClient = null;
 let _supabaseConfig = null;
 
 const VarjoyApp = {
-  // ===================== SUPABASE INIT =====================
+  // -- SUPABASE INIT --
   async initSupabase() {
     if (_supabaseClient) return _supabaseClient;
 
@@ -31,7 +29,7 @@ const VarjoyApp = {
     return _supabaseClient;
   },
 
-  // ===================== AUTH HELPERS =====================
+  // -- AUTH HELPERS --
   async getSession() {
     const client = this.getClient();
     if (!client) return null;
@@ -87,7 +85,7 @@ const VarjoyApp = {
     if (error) throw error;
   },
 
-  // ===================== API HELPERS =====================
+  // -- API HELPERS --
   async api(endpoint, options = {}) {
     const token = await this.getAccessToken();
     const headers = { 'Content-Type': 'application/json' };
@@ -125,7 +123,7 @@ const VarjoyApp = {
     return this.api(endpoint, { method: 'PUT', body: JSON.stringify(body) });
   },
 
-  // ===================== UTILS =====================
+  // -- UTILS --
   uuid() {
     return crypto.randomUUID ? crypto.randomUUID() :
       'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {

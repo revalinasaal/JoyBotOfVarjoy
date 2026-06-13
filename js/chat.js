@@ -1,6 +1,4 @@
-// ============================================================
-// VARJOY — Chat Module (UI Redesigned, backend untouched)
-// ============================================================
+// -- VARJOY — Chat Module (UI Redesigned, backend untouched) --
 
 const Chat = {
   sessionId: null,
@@ -47,15 +45,17 @@ const Chat = {
     // Send welcome if first time
     const msgs = document.getElementById('chat-messages');
     const typing = document.getElementById('typing-indicator');
-    
+
     // Clear existing bubbles except typing
     [...msgs.children].forEach(el => {
       if (el !== typing) el.remove();
     });
 
-    const userName = localStorage.getItem('userName') || 'kamu';
+    // Use preferred name from settings, fall back to localStorage, then default
+    const settingsName = ChatSettings.settings?.joyCallName;
+    const userName = settingsName || localStorage.getItem('userName') || 'kamu';
     document.getElementById('chat-greeting').textContent = `Hi ${userName} 👋`;
-    
+
     // Show welcome message
     this.addBubble(`heyy ${userName} 👋 aku Joy, seneng banget bisa ngobrol sama kamu. lagi gimana hari ini?`, 'joy');
   },
@@ -94,9 +94,15 @@ const Chat = {
     this.setTyping(true);
 
     try {
+      // Include user settings so Joy uses the preferred name, tone, etc.
+      const settings = ChatSettings.settings || {};
       const data = await VarjoyApp.post('/chat', {
         session_id: this.sessionId,
-        message: text
+        message: text,
+        preferred_name: settings.joyCallName || null,
+        tone: settings.tone || null,
+        desired_output: settings.desiredOutput || null,
+        language: settings.language || null
       });
 
       this.setTyping(false);
@@ -119,14 +125,14 @@ const Chat = {
 
     try {
       await VarjoyApp.post('/reset', { session_id: this.sessionId });
-    } catch (e) {}
+    } catch (e) { }
 
     // Create new session
     try {
       const session = await VarjoyApp.post('/sessions', {});
       this.sessionId = session.id;
       localStorage.setItem('varjoy_session_id', this.sessionId);
-    } catch (e) {}
+    } catch (e) { }
 
     await this.loadMessages();
   },
@@ -136,7 +142,7 @@ const Chat = {
     el.style.height = Math.min(el.scrollHeight, 100) + 'px';
   },
 
-  // ===================== SPEECH RECOGNITION =====================
+  // -- SPEECH RECOGNITION --
   initSpeechRecognition() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) return null;
@@ -202,9 +208,7 @@ const Chat = {
 };
 
 
-// ============================================================
-// Chat Settings Module
-// ============================================================
+// -- Chat Settings Module --
 const ChatSettings = {
   settings: {
     joyCallName: '',
@@ -221,13 +225,11 @@ const ChatSettings = {
     document.getElementById('settings-notify-toggle')?.addEventListener('click', (e) => {
       this.settings.notifyResponses = !this.settings.notifyResponses;
       e.currentTarget.classList.toggle('active', this.settings.notifyResponses);
-      this.saveSettings();
     });
 
-    // Name input
-    document.getElementById('settings-joy-name')?.addEventListener('change', (e) => {
+    // Name input — update local state only (no auto-save)
+    document.getElementById('settings-joy-name')?.addEventListener('input', (e) => {
       this.settings.joyCallName = e.target.value.trim();
-      this.saveSettings();
     });
 
     // Tone buttons
@@ -236,7 +238,6 @@ const ChatSettings = {
         document.querySelectorAll('.tone-option').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         this.settings.tone = btn.dataset.value;
-        this.saveSettings();
       });
     });
 
@@ -246,7 +247,15 @@ const ChatSettings = {
         document.querySelectorAll('.output-option').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         this.settings.desiredOutput = btn.dataset.value;
-        this.saveSettings();
+      });
+    });
+
+    // Language buttons
+    document.querySelectorAll('.lang-option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.lang-option').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        this.settings.language = btn.dataset.value;
       });
     });
 
@@ -258,11 +267,52 @@ const ChatSettings = {
         if (word && !this.settings.censoredWords.includes(word)) {
           this.settings.censoredWords.push(word);
           this.renderCensoredWords();
-          this.saveSettings();
         }
         e.target.value = '';
       }
     });
+
+    // -- SAVE BUTTON --
+    document.getElementById('settings-save-btn')?.addEventListener('click', () => {
+      this.handleSave();
+    });
+  },
+
+  handleSave() {
+    const btn = document.getElementById('settings-save-btn');
+    if (!btn) return;
+
+    // Gather current values from UI to be sure
+    const nameInput = document.getElementById('settings-joy-name');
+    if (nameInput) this.settings.joyCallName = nameInput.value.trim();
+
+    // Save to localStorage
+    this.saveSettings();
+
+    // Also update the chat greeting name if changed
+    if (this.settings.joyCallName) {
+      localStorage.setItem('userName', this.settings.joyCallName);
+      const greetingEl = document.getElementById('chat-greeting');
+      if (greetingEl) greetingEl.textContent = `Hi ${this.settings.joyCallName} 👋`;
+      const homeNameEl = document.getElementById('home-user-name');
+      if (homeNameEl) homeNameEl.textContent = this.settings.joyCallName;
+    }
+
+    // Visual feedback on button
+    btn.disabled = true;
+    btn.classList.add('saved');
+    const originalHTML = btn.innerHTML;
+    btn.innerHTML = '<span class="save-icon">✓</span> Tersimpan!';
+
+    // Show toast
+    VarjoyApp.showToast('Settings berhasil disimpan! 💾');
+
+    // Reset button after 2 seconds
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.classList.remove('saved');
+      btn.innerHTML = originalHTML;
+    }, 2000);
   },
 
   loadSettings() {
@@ -270,7 +320,7 @@ const ChatSettings = {
     if (saved) {
       try {
         this.settings = { ...this.settings, ...JSON.parse(saved) };
-      } catch (e) {}
+      } catch (e) { }
     }
     this.applyToUI();
   },
@@ -296,6 +346,11 @@ const ChatSettings = {
       btn.classList.toggle('active', btn.dataset.value === this.settings.desiredOutput);
     });
 
+    // Set active language
+    document.querySelectorAll('.lang-option').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.value === this.settings.language);
+    });
+
     this.renderCensoredWords();
   },
 
@@ -313,6 +368,8 @@ const ChatSettings = {
   removeWord(word) {
     this.settings.censoredWords = this.settings.censoredWords.filter(w => w !== word);
     this.renderCensoredWords();
-    this.saveSettings();
   }
 };
+
+ChatSettings.init()
+

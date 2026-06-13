@@ -104,3 +104,15 @@ CREATE TRIGGER on_auth_user_created
 CREATE INDEX idx_chat_messages_session ON public.chat_messages(session_id);
 CREATE INDEX idx_chat_sessions_user ON public.chat_sessions(user_id);
 CREATE INDEX idx_mood_entries_user_date ON public.mood_entries(user_id, entry_date);
+
+-- chatbot settings
+alter table profiles
+add column preferred_name text,
+add column tone text,
+add column output_style text,
+add column language text,
+add column notifications boolean default true;
+
+-- censored words
+alter table profiles
+add column censored_words text[];

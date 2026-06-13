@@ -196,14 +196,26 @@ const Home = {
   },
 
   async loadData() {
-    try {
-      const moods = await VarjoyApp.get('/moods?days=7');
+    const cached = localStorage.getItem('varjoy_mood_cache');
+    if (cached) {
+      const moods = JSON.parse(cached);
       this.renderWellness(moods);
       this.renderMoodWeek(moods);
+    }
+
+    try {
+      const moods = await VarjoyApp.get('/moods?days=7');
+      localStorage.setItem('varjoy_mood_cache', JSON.stringify(moods)); // simpan cache
+      this.renderWellness(moods);
+      this.renderMoodWeek(moods);
+      this.setVideoRecommendation(moods);
+      await this.checkGuardianAlert(moods);
     } catch (err) {
       console.error('Home data load error:', err);
-      this.renderWellness([]);
-      this.renderMoodWeek([]);
+      if (!cached) {
+        this.renderWellness([]);
+        this.renderMoodWeek([]);
+      }
     }
   },
 
@@ -260,6 +272,27 @@ const Home = {
     `;
   },
 
+  setVideoRecommendation(moods) {
+    const link = document.getElementById('rec-video-link');
+    if (!link || moods.length === 0) return;
+
+    const avgScore = moods.reduce((sum, m) => sum + m.score, 0) / moods.length;
+
+    let query = '';
+    if (avgScore <= 3) {
+      query = 'gentle stretching for anxiety relief';
+    } else if (avgScore <= 5) {
+      query = 'light yoga for stress relief beginner';
+    } else if (avgScore <= 7) {
+      query = 'morning stretch routine energizing';
+    } else {
+      query = 'fun dance workout feel good';
+    }
+
+    const url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
+    link.href = url;
+  },
+
   renderMoodWeek(moods) {
     const container = document.getElementById('home-mood-week');
     if (!container) return;
@@ -291,7 +324,10 @@ const Home = {
         </div>
       `;
     }
-
     container.innerHTML = daysHtml;
+  },
+
+  async checkGuardianAlert(moods) {
+    // Stub to prevent error
   }
 };

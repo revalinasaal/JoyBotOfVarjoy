@@ -1,6 +1,4 @@
-// ============================================================
-// VARJOY — App Navigation & Initialization
-// ============================================================
+// -- VARJOY — App Navigation & Initialization --
 
 let currentScreen = 'splash';
 
@@ -31,13 +29,75 @@ async function initChatAfterAuth() {
     await Home.init();
     await Chat.init();
     await Mood.loadHistory();
+    Journal.init();
+    await Journal.loadJournals();
   } catch (e) {
     console.error('Init error:', e);
   }
 }
 
-// ===================== APP BOOT =====================
+// -- APP BOOT --
 window.addEventListener('load', async () => {
+  await VarjoyApp.initSupabase();
+  const client = VarjoyApp.getClient();
+
+  // Cek apakah ini redirect dari reset password email
+  const hash = window.location.hash;
+  const searchParams = new URLSearchParams(window.location.search);
+  const isRecovery = (hash && hash.includes('type=recovery')) ||
+    searchParams.get('type') === 'recovery' ||
+    (hash && hash.includes('access_token') && hash.includes('recovery'));
+
+  if (isRecovery) {
+    // Supabase sudah set session otomatis dari hash
+    // Wait briefly for Supabase to process the recovery token
+    await new Promise(r => setTimeout(r, 500));
+    showScreen('reset-password');
+
+    // Handle submit reset password
+    document.getElementById('reset-submit-btn')?.addEventListener('click', async () => {
+      const newPass = document.getElementById('reset-new-password').value;
+      const confirmPass = document.getElementById('reset-confirm-password').value;
+      const errorEl = document.getElementById('reset-error');
+      errorEl.style.display = 'none';
+
+      if (newPass.length < 6) {
+        errorEl.textContent = 'Password minimal 6 karakter ya';
+        errorEl.style.display = 'block';
+        return;
+      }
+      if (newPass !== confirmPass) {
+        errorEl.textContent = 'Password tidak sama nih';
+        errorEl.style.display = 'block';
+        return;
+      }
+
+      const btn = document.getElementById('reset-submit-btn');
+      btn.disabled = true;
+      btn.textContent = 'Menyimpan...';
+
+      try {
+        const { error } = await client.auth.updateUser({ password: newPass });
+        if (error) throw error;
+        VarjoyApp.showToast('Password berhasil diubah! 🎉');
+        setTimeout(() => {
+          // Clear the hash/params and go to login
+          window.location.href = 'https://varjoy-web.vercel.app';
+        }, 1500);
+      } catch (err) {
+        errorEl.textContent = err.message || 'Gagal reset password, coba lagi';
+        errorEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Simpan Password';
+      }
+    });
+
+    return;
+  }
+
+  // Warm up backend biar ga cold start
+  fetch('/config').catch(() => { });
+
   // Init Supabase
   await VarjoyApp.initSupabase();
 
@@ -54,7 +114,7 @@ window.addEventListener('load', async () => {
       if (profile?.display_name) {
         localStorage.setItem('userName', profile.display_name);
       }
-    } catch (e) {}
+    } catch (e) { }
 
     await initChatAfterAuth();
   } else {
@@ -64,6 +124,44 @@ window.addEventListener('load', async () => {
 
   // Init auth module
   Auth.init();
+
+  document.getElementById('reset-submit-btn')?.addEventListener('click', async () => {
+    const newPass = document.getElementById('reset-new-password').value;
+    const confirmPass = document.getElementById('reset-confirm-password').value;
+    const errorEl = document.getElementById('reset-error');
+
+    errorEl.style.display = 'none';
+
+    if (newPass.length < 6) {
+      errorEl.textContent = 'Password minimal 6 karakter ya';
+      errorEl.style.display = 'block';
+      return;
+    }
+    if (newPass !== confirmPass) {
+      errorEl.textContent = 'Password tidak sama nih';
+      errorEl.style.display = 'block';
+      return;
+    }
+
+    const btn = document.getElementById('reset-submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Menyimpan...';
+
+    try {
+      const client = VarjoyApp.getClient();
+      const { error } = await client.auth.updateUser({ password: newPass });
+      if (error) throw error;
+
+      VarjoyApp.showToast('Password berhasil diubah! 🎉');
+      setTimeout(() => showScreen('auth'), 1500);
+    } catch (err) {
+      errorEl.textContent = err.message || 'Gagal reset password, coba lagi';
+      errorEl.style.display = 'block';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Simpan Password';
+    }
+  });
 
   // Bottom nav event listeners
   document.querySelectorAll('.nav-item').forEach(item => {

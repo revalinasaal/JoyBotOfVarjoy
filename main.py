@@ -26,7 +26,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ===================== CONFIG =====================
+#  CONFIG 
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY")
@@ -34,13 +34,11 @@ SUPABASE_ANON_KEY = os.environ.get("SUPABASE_ANON_KEY", "")
 
 client = Groq(api_key=GROQ_API_KEY)
 
-# Supabase client with service_role key (bypasses RLS)
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY) if SUPABASE_URL and SUPABASE_SERVICE_KEY else None
 
-# JWKS URL for Supabase JWT verification
 SUPABASE_JWT_SECRET = os.environ.get("SUPABASE_JWT_SECRET", "")
 
-# ===================== AUTH =====================
+#  AUTH 
 async def get_current_user(authorization: str = Header(None)) -> dict:
     """Verify Supabase JWT and return user info."""
     if not authorization or not authorization.startswith("Bearer "):
@@ -49,7 +47,6 @@ async def get_current_user(authorization: str = Header(None)) -> dict:
     token = authorization.replace("Bearer ", "")
 
     try:
-        # Verify with Supabase - get user from token
         res = supabase.auth.get_user(token)
         if not res or not res.user:
             raise HTTPException(status_code=401, detail="Invalid token")
@@ -59,7 +56,7 @@ async def get_current_user(authorization: str = Header(None)) -> dict:
         raise HTTPException(status_code=401, detail="Invalid or expired token")
 
 
-# ===================== JOY SYSTEM PROMPT =====================
+#  JOY SYSTEM PROMPT 
 JOY_SYSTEM_PROMPT = """
 Kamu adalah Joy, teman curhat yang hangat, cerdas, dan genuinely peduli.
 
@@ -180,7 +177,6 @@ Ingat: kamu Joy, teman yang beneran ada. Bukan chatbot.
 
 MAX_HISTORY = 20
 
-
 def fix_text(text: str) -> str:
     text = re.sub(r'<\|[^|]*\|>', '', text)
     text = re.sub(r'\[INST\].*?\[/INST\]', '', text, flags=re.DOTALL)
@@ -192,10 +188,14 @@ def fix_text(text: str) -> str:
     return text.strip()
 
 
-# ===================== MODELS =====================
+#  MODELS 
 class ChatRequest(BaseModel):
     session_id: str
     message: str
+    preferred_name: Optional[str] = None
+    tone: Optional[str] = None
+    desired_output: Optional[str] = None
+    language: Optional[str] = None
 
 class ChatResponse(BaseModel):
     reply: str
@@ -213,9 +213,14 @@ class ProfileUpdate(BaseModel):
 class NewSessionRequest(BaseModel):
     pass
 
+class EmotionDetectRequest(BaseModel):
+    text: str
 
-# ===================== ENDPOINTS =====================
+class JournalRequest(BaseModel):
+    content: str
 
+
+#  ENDPOINTS 
 @app.get("/")
 def root():
     return {"status": "Joy is online"}
@@ -228,7 +233,6 @@ def get_config():
         "supabase_url": SUPABASE_URL,
         "supabase_anon_key": SUPABASE_ANON_KEY,
     }
-
 
 @app.get("/profile")
 async def get_profile(user=Depends(get_current_user)):
@@ -252,8 +256,7 @@ async def update_profile(req: ProfileUpdate, user=Depends(get_current_user)):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-# ===================== CHAT SESSIONS =====================
-
+#  CHAT SESSIONS 
 @app.get("/sessions")
 async def list_sessions(user=Depends(get_current_user)):
     """List user's chat sessions."""
@@ -283,13 +286,11 @@ async def create_session(user=Depends(get_current_user)):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-# ===================== CHAT MESSAGES =====================
-
+#  CHAT MESSAGES 
 @app.get("/messages")
 async def get_messages(session_id: str, user=Depends(get_current_user)):
     """Get messages for a chat session."""
     try:
-        # Verify session ownership
         session_check = supabase.table("chat_sessions") \
             .select("id") \
             .eq("id", session_id) \
@@ -313,12 +314,10 @@ async def get_messages(session_id: str, user=Depends(get_current_user)):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-# ===================== CHAT =====================
-
+#  CHAT 
 @app.post("/chat", response_model=ChatResponse)
 async def chat(req: ChatRequest, user=Depends(get_current_user)):
     try:
-        # Verify session belongs to user
         session_check = supabase.table("chat_sessions") \
             .select("id") \
             .eq("id", req.session_id) \
@@ -330,7 +329,9 @@ async def chat(req: ChatRequest, user=Depends(get_current_user)):
 
         # Get profile for name
         profile = supabase.table("profiles").select("display_name").eq("id", user["id"]).single().execute()
-        user_name = profile.data["display_name"] if profile.data else "User"
+        profile_name = profile.data["display_name"] if profile.data else "User"
+
+        user_name = req.preferred_name if req.preferred_name else profile_name
 
         # Get chat history from DB
         history_res = supabase.table("chat_messages") \
@@ -342,8 +343,30 @@ async def chat(req: ChatRequest, user=Depends(get_current_user)):
 
         history = history_res.data if history_res.data else []
 
+        settings_context = f"\n\nNama user yang lagi ngobrol sama kamu adalah {user_name}. JANGAN sebut namanya kecuali di sapaan pertama saja."
+
+        if req.tone:
+            tone_map = {
+                "Honest": "Jawab dengan jujur dan apa adanya, tapi tetap sopan.",
+                "Gentle": "Jawab dengan lembut, penuh perhatian, dan hati-hati dengan perasaan user.",
+                "Playful": "Jawab dengan gaya yang fun, playful, dan sedikit bercanda."
+            }
+            if req.tone in tone_map:
+                settings_context += f"\n\nTone: {tone_map[req.tone]}"
+
+        if req.desired_output:
+            output_map = {
+                "Assuring": "Berikan respon yang menenangkan dan reassuring.",
+                "Direct": "Berikan respon yang to the point dan langsung ke inti."
+            }
+            if req.desired_output in output_map:
+                settings_context += f"\n\nOutput style: {output_map[req.desired_output]}"
+
+        if req.language and req.language == "English":
+            settings_context += "\n\nIMPORTANT: The user wants you to respond in English. Use casual, friendly English (like texting a close friend). Keep the same personality and warmth but in English. Use slang like 'tbh', 'ngl', 'lol', 'fr', 'lowkey' naturally."
+
         # Build messages for Groq
-        system = JOY_SYSTEM_PROMPT + f"\n\nNama user yang lagi ngobrol sama kamu adalah {user_name}. JANGAN sebut namanya kecuali di sapaan pertama saja."
+        system = JOY_SYSTEM_PROMPT + settings_context
         messages = [{"role": "system", "content": system}]
         messages += [{"role": h["role"], "content": h["content"]} for h in history]
         messages.append({"role": "user", "content": req.message})
@@ -400,8 +423,57 @@ async def reset(req: ResetRequest, user=Depends(get_current_user)):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-# ===================== MOOD =====================
+#  EMOTION DETECTION 
 
+@app.post("/detect-emotion")
+async def detect_emotion(req: EmotionDetectRequest, user=Depends(get_current_user)):
+    """Use AI to detect emotion from user text."""
+    valid_emotions = ["Angry", "Depressed", "Sad", "Happy", "Displeased", "Calm", "Fear", "Empty", "Anxious", "In-love"]
+
+    detect_prompt = f"""Kamu adalah emotion detector. User akan cerita tentang perasaannya.
+Tugas kamu HANYA mendeteksi emosi dominan dari teks user.
+
+Emosi yang valid HANYA: {', '.join(valid_emotions)}
+
+BALAS HANYA DENGAN SATU KATA dari daftar emosi di atas. Tidak ada penjelasan, tidak ada kalimat lain.
+
+Contoh:
+User: "aku seneng banget hari ini" -> Happy
+User: "capek banget ga tau harus gimana" -> Empty
+User: "kesel sama temen" -> Angry
+User: "deg-degan mau presentasi" -> Anxious
+
+User: \"{req.text}\"
+"""
+
+    try:
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[{"role": "user", "content": detect_prompt}],
+            temperature=0.3,
+            max_tokens=10,
+        )
+
+        raw = response.choices[0].message.content.strip()
+        detected = None
+        for emotion in valid_emotions:
+            if emotion.lower() in raw.lower():
+                detected = emotion
+                break
+
+        if not detected:
+            detected = raw.split()[0] if raw else None
+            if detected not in valid_emotions:
+                detected = None
+
+        return {"emotion": detected, "raw": raw}
+
+    except Exception as e:
+        logger.error(f"Emotion detect error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+#  MOOD 
 @app.post("/mood")
 async def save_mood(req: MoodRequest, user=Depends(get_current_user)):
     """Save mood entry for today (upsert)."""
@@ -410,7 +482,6 @@ async def save_mood(req: MoodRequest, user=Depends(get_current_user)):
 
     try:
         today = date.today().isoformat()
-        # Try upsert
         res = supabase.table("mood_entries").upsert({
             "user_id": user["id"],
             "score": req.score,
@@ -443,19 +514,65 @@ async def get_mood_today(user=Depends(get_current_user)):
 
 @app.get("/moods")
 async def get_moods(days: int = 30, user=Depends(get_current_user)):
-    """Get mood entries for last N days."""
+    """Get user's past moods."""
     try:
-        from_date = (date.today() - timedelta(days=days)).isoformat()
+        start_date = date.today() - timedelta(days=days)
         res = supabase.table("mood_entries") \
             .select("*") \
             .eq("user_id", user["id"]) \
-            .gte("entry_date", from_date) \
-            .order("entry_date") \
+            .gte("entry_date", start_date.isoformat()) \
+            .order("entry_date", desc=True) \
             .execute()
-        return res.data if res.data else []
+        return res.data
     except Exception as e:
-        logger.error(f"Moods fetch error: {e}")
+        logger.error(f"Moods error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+#  JOURNAL 
+@app.post("/journal")
+async def save_journal(req: JournalRequest, user=Depends(get_current_user)):
+    """Save journal entry and generate AI feedback."""
+    try:
+        # AI feedback
+        feedback_prompt = f"""Kamu adalah teman yang pengertian bernama Joy. 
+User baru saja menulis jurnal hari ini. Berikan tanggapan singkat, suportif, dan empatik (maksimal 2 kalimat).
+
+Jurnal User: "{req.content}"
+"""
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[{"role": "user", "content": feedback_prompt}],
+            temperature=0.7,
+            max_tokens=100,
+        )
+        ai_feedback = response.choices[0].message.content.strip()
+
+        res = supabase.table("journal_entries").insert({
+            "user_id": user["id"],
+            "content": req.content,
+            "ai_feedback": ai_feedback,
+            "entry_date": date.today().isoformat()
+        }).execute()
+        
+        return {"status": "ok", "data": res.data[0] if res.data else None}
+    except Exception as e:
+        logger.error(f"Journal save error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/journals")
+async def get_journals(user=Depends(get_current_user)):
+    """Get user's journal entries."""
+    try:
+        res = supabase.table("journal_entries") \
+            .select("*") \
+            .eq("user_id", user["id"]) \
+            .order("created_at", desc=True) \
+            .execute()
+        return res.data
+    except Exception as e:
+        logger.error(f"Journals fetch error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.delete("/account")
 async def delete_account(user=Depends(get_current_user)):

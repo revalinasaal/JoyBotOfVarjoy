@@ -3,24 +3,22 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=resizes-content" />
   <title>Varjoy — Open your mind</title>
   <meta name="description" content="Varjoy — teman curhat AI yang hangat dan peduli. Open your mind with Joy." />
 
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Yellowtail&family=Caveat:wght@600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=2.9" />
+
   <!-- Supabase JS Client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
 
   <div class="phone">
 
-    <!-- ===================================================================
-       SCREEN: SPLASH ("buka")
-       =================================================================== -->
+    <!-- -- SCREEN: SPLASH ("buka") -- -->
     <div id="screen-splash" class="screen">
       <div class="splash-content">
         <p class="splash-tagline">Open your mind with</p>
@@ -30,9 +28,7 @@
       <img src="assets/homeVarjoy.png" class="splash-illustration" alt="Varjoy Character" />
     </div>
 
-    <!-- ===================================================================
-       SCREEN: AUTH (Login / Sign Up)
-       =================================================================== -->
+    <!-- -- SCREEN: AUTH (Login / Sign Up) -- -->
     <div id="screen-auth" class="screen hidden">
       <div class="auth-header">
         <p class="auth-welcome">Welcome to</p>
@@ -86,680 +82,781 @@
 
         <img src="assets/bruanagJOY.png" class="auth-character" alt="Joy Bear" />
       </div>
+    </div>
 
-      <!-- ===================================================================
-       SCREEN: HOME DASHBOARD
-       =================================================================== -->
-      <div id="screen-home" class="screen hidden">
-        <div class="home-scroll">
-          <!-- Header -->
-          <div class="home-header">
-            <div>
-              <p class="home-welcome">Welcome back,</p>
-              <h2 class="home-name" id="home-user-name">User</h2>
-            </div>
-            <div class="home-shield" title="Wellness Shield">🛡</div>
+    <!-- -- SCREEN: HOME DASHBOARD -- -->
+    <div id="screen-home" class="screen hidden">
+      <div class="home-scroll">
+        <!-- Header -->
+        <div class="home-header">
+          <div>
+            <p class="home-welcome">Welcome back,</p>
+            <h2 class="home-name" id="home-user-name">User</h2>
           </div>
+          <div class="home-shield" title="Wellness Shield">🛡</div>
+        </div>
 
-          <!-- Wellness Card -->
-          <div class="wellness-card" id="home-wellness">
-            <div class="wellness-header">
-              <span style="font-size:32px;">❝</span>
-              <span class="wellness-title">Your Wellness</span>
-            </div>
-            <div class="wellness-status">
-              <div class="wellness-status-text">
-                <h3>Loading...</h3>
-                <p>Memuat data mood kamu</p>
-              </div>
-              <div class="wellness-emoji">⏳</div>
-            </div>
+        <!-- Wellness Card -->
+        <div class="wellness-card" id="home-wellness">
+          <div class="wellness-header">
+            <span style="font-size:32px;">❝</span>
+            <span class="wellness-title">Your Wellness</span>
           </div>
-
-          <!-- Mood Calendar (Week) -->
-          <div class="mood-week-card">
-            <div class="mood-week-header">
-              <h3>Mood Calendar</h3>
-              <button class="mood-week-toggle" id="home-mood-see-all">Week →</button>
+          <div class="wellness-status">
+            <div class="wellness-status-text">
+              <div class="skeleton" style="width:120px;height:24px;margin-bottom:8px;border-radius:8px;"></div>
+              <div class="skeleton" style="width:180px;height:16px;border-radius:8px;"></div>
             </div>
-            <div class="mood-week-days" id="home-mood-week">
-              <!-- Rendered by JS -->
-            </div>
-            <button class="btn-log-day" id="home-log-day-btn">Log your day</button>
+            <div class="skeleton" style="width:48px;height:48px;border-radius:50%;"></div>
           </div>
+        </div>
 
-          <!-- Activity Statistics -->
-          <div class="activity-section">
-            <div class="section-header">
-              <h3>Activity Statistics</h3>
-              <a>See details</a>
-            </div>
-            <div class="activity-cards">
-              <div class="activity-card">
-                <span class="activity-card-label">Sleep</span>
-                <div class="activity-card-value">
-                  <span id="stat-sleep">--</span>
-                  <small>h</small>
-                </div>
-                <div class="activity-mini-chart">
-                  <div class="activity-mini-bar" style="height:60%;background:var(--purple-light);"></div>
-                  <div class="activity-mini-bar" style="height:80%;background:var(--purple-light);"></div>
-                  <div class="activity-mini-bar" style="height:40%;background:var(--purple-light);"></div>
-                  <div class="activity-mini-bar" style="height:70%;background:var(--purple-mid);"></div>
-                </div>
-              </div>
-              <div class="activity-card">
-                <span class="activity-card-label">Physical</span>
-                <div class="activity-card-value">
-                  <span id="stat-steps">--</span>
-                  <small>steps</small>
-                </div>
-                <div class="activity-mini-chart">
-                  <div class="activity-mini-bar" style="height:50%;background:var(--green-light);"></div>
-                  <div class="activity-mini-bar" style="height:90%;background:var(--green-light);"></div>
-                  <div class="activity-mini-bar" style="height:60%;background:var(--green-light);"></div>
-                  <div class="activity-mini-bar" style="height:75%;background:var(--green-mint);"></div>
-                </div>
-              </div>
-              <div class="activity-card">
-                <span class="activity-card-label">Screen Time</span>
-                <div class="activity-card-value">
-                  <span id="stat-screen">--</span>
-                  <small>h</small>
-                </div>
-                <div class="activity-mini-chart">
-                  <div class="activity-mini-bar" style="height:85%;background:var(--yellow);"></div>
-                  <div class="activity-mini-bar" style="height:70%;background:var(--yellow);"></div>
-                  <div class="activity-mini-bar" style="height:90%;background:var(--yellow);"></div>
-                  <div class="activity-mini-bar" style="height:65%;background:var(--yellow-dark);"></div>
-                </div>
-              </div>
-            </div>
+        <!-- Mood Calendar (Week) -->
+        <div class="mood-week-card">
+          <div class="mood-week-header">
+            <h3>Mood Calendar</h3>
+            <button class="mood-week-toggle" id="home-mood-see-all">Week →</button>
           </div>
+          <div class="mood-week-days" id="home-mood-week">
+            <!-- Rendered by JS -->
+          </div>
+          <button class="btn-log-day" id="home-log-day-btn">Log your day</button>
+        </div>
 
-          <!-- Meal Log -->
-          <div class="meal-section">
-            <div class="section-header">
-              <h3>Log Meals</h3>
-              <a>See details</a>
+        <!-- Activity Statistics -->
+        <div class="activity-section">
+          <div class="section-header">
+            <h3>Activity Statistics</h3>
+            <a>See details</a>
+          </div>
+          <div class="activity-cards">
+            <div class="activity-card">
+              <span class="activity-card-label">Sleep</span>
+              <div class="activity-card-value">
+                <span id="stat-sleep">--</span>
+                <small>h</small>
+              </div>
+              <div class="activity-mini-chart">
+                <div class="activity-mini-bar" style="height:60%;background:var(--purple-light);"></div>
+                <div class="activity-mini-bar" style="height:80%;background:var(--purple-light);"></div>
+                <div class="activity-mini-bar" style="height:40%;background:var(--purple-light);"></div>
+                <div class="activity-mini-bar" style="height:70%;background:var(--purple-mid);"></div>
+              </div>
             </div>
-            <div class="meal-item">
-              <div class="meal-item-header">
-                <span class="meal-item-label">Water Intake</span>
-                <span class="meal-item-value" id="meal-water">-- liters</span>
+            <div class="activity-card">
+              <span class="activity-card-label">Physical</span>
+              <div class="activity-card-value">
+                <span id="stat-steps">--</span>
+                <small>steps</small>
               </div>
-              <div class="meal-progress">
-                <div class="meal-progress-fill" style="width:70%;"></div>
+              <div class="activity-mini-chart">
+                <div class="activity-mini-bar" style="height:50%;background:var(--green-light);"></div>
+                <div class="activity-mini-bar" style="height:90%;background:var(--green-light);"></div>
+                <div class="activity-mini-bar" style="height:60%;background:var(--green-light);"></div>
+                <div class="activity-mini-bar" style="height:75%;background:var(--green-mint);"></div>
               </div>
             </div>
-            <div class="meal-item">
-              <div class="meal-item-header">
-                <span class="meal-item-label">Calorie Count</span>
-                <span class="meal-item-value" id="meal-calories">-- Kcals</span>
+            <div class="activity-card">
+              <span class="activity-card-label">Screen Time</span>
+              <div class="activity-card-value">
+                <span id="stat-screen">--</span>
+                <small>h</small>
               </div>
-              <div class="meal-progress">
-                <div class="meal-progress-fill"
-                  style="width:85%;background:linear-gradient(90deg, var(--yellow), var(--yellow-dark));"></div>
+              <div class="activity-mini-chart">
+                <div class="activity-mini-bar" style="height:85%;background:var(--yellow);"></div>
+                <div class="activity-mini-bar" style="height:70%;background:var(--yellow);"></div>
+                <div class="activity-mini-bar" style="height:90%;background:var(--yellow);"></div>
+                <div class="activity-mini-bar" style="height:65%;background:var(--yellow-dark);"></div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Bottom Navigation -->
-        <nav class="bottom-nav" id="bottom-nav">
-          <button class="nav-item active" data-screen="home">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path
-                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z" />
-            </svg>
-            <span>Home</span>
-          </button>
-          <button class="nav-item" data-screen="mood">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-              <line x1="16" y1="2" x2="16" y2="6" />
-              <line x1="8" y1="2" x2="8" y2="6" />
-              <line x1="3" y1="10" x2="21" y2="10" />
-            </svg>
-            <span>Mood</span>
-          </button>
-          <button class="nav-item nav-center" data-screen="log-day">
-            <div class="nav-icon">💛</div>
-          </button>
-          <button class="nav-item" data-screen="chat">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
-            </svg>
-            <span>Chat</span>
-          </button>
-          <button class="nav-item" data-screen="account">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-            <span>Profile</span>
-          </button>
-        </nav>
+        <!-- Meal Log -->
+        <div class="meal-section">
+          <div class="section-header">
+            <h3>Log Meals</h3>
+            <a>See details</a>
+          </div>
+          <div class="meal-item">
+            <div class="meal-item-header">
+              <span class="meal-item-label">Water Intake</span>
+              <span class="meal-item-value" id="meal-water">-- liters</span>
+            </div>
+            <div class="meal-progress">
+              <div class="meal-progress-fill" style="width:70%;"></div>
+            </div>
+          </div>
+          <div class="meal-item">
+            <div class="meal-item-header">
+              <span class="meal-item-label">Calorie Count</span>
+              <span class="meal-item-value" id="meal-calories">-- Kcals</span>
+            </div>
+            <div class="meal-progress">
+              <div class="meal-progress-fill"
+                style="width:85%;background:linear-gradient(90deg, var(--yellow), var(--yellow-dark));"></div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- ===================================================================
-       SCREEN: CHATBOT
-       =================================================================== -->
-      <div id="screen-chat" class="screen hidden">
-        <div class="chat-header">
-          <button class="chat-back" id="chat-back-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <polyline points="15 18 9 12 15 6" />
+      <!-- Bottom Navigation -->
+      <nav class="bottom-nav" id="bottom-nav">
+        <button class="nav-item active" data-screen="home">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z" />
+          </svg>
+          <span>Home</span>
+        </button>
+        <button class="nav-item" data-screen="mood">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+          <span>Mood</span>
+        </button>
+        <button class="nav-item nav-center" data-screen="log-day">
+          <div class="nav-icon">💛</div>
+        </button>
+        <button class="nav-item" data-screen="chat">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+          </svg>
+          <span>Chat</span>
+        </button>
+        <button class="nav-item" data-screen="account">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <span>Profile</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- -- SCREEN: CHATBOT -- -->
+    <div id="screen-chat" class="screen hidden">
+      <div class="chat-header">
+        <button class="chat-back" id="chat-back-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+        <img src="assets/bruanagJOY.png" class="chat-avatar" alt="Joy" />
+        <div class="chat-user-info">
+          <div class="chat-title">Joy</div>
+          <div class="chat-subtitle" id="chat-greeting">Hi 👋</div>
+        </div>
+        <button class="chat-settings-btn" id="chat-reset-btn" title="Reset Chat">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+            <path d="M3 3v5h5" />
+          </svg>
+        </button>
+        <button class="chat-settings-btn" id="chat-settings-nav" title="Settings">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3" />
+            <path
+              d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="chat-messages" id="chat-messages">
+        <div class="bubble bubble-typing" id="typing-indicator">
+          <span class="typing-dots">
+            <span>•</span><span>•</span><span>•</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="chat-input-area">
+        <div class="chat-input-box">
+          <textarea id="chat-input" class="chat-input" placeholder="Ayo ungkapkan isi hatimu" rows="1"></textarea>
+          <button class="btn-mic" id="chat-mic-btn" title="Voice input">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
+              <path d="M19 10v2a7 7 0 01-14 0v-2" />
+              <line x1="12" y1="19" x2="12" y2="23" />
+              <line x1="8" y1="23" x2="16" y2="23" />
             </svg>
           </button>
-          <button class="chat-star">★</button>
-          <img src="assets/bruanagJOY.png" class="chat-avatar" alt="Joy" />
-          <div class="chat-user-info">
-            <div class="chat-title">Joy</div>
-            <div class="chat-subtitle" id="chat-greeting">Hi 👋</div>
-          </div>
-          <button class="chat-settings-btn" id="chat-settings-nav" title="Settings">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="3" />
-              <path
-                d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
+          <button class="chat-send" id="chat-send-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
             </svg>
           </button>
         </div>
+      </div>
+    </div>
 
-        <div class="chat-messages" id="chat-messages">
-          <div class="bubble bubble-typing" id="typing-indicator">
-            <span class="typing-dots">
-              <span>•</span><span>•</span><span>•</span>
-            </span>
+    <!-- -- SCREEN: CHAT SETTINGS -- -->
+    <div id="screen-chat-settings" class="screen hidden">
+      <div class="settings-header">
+        <button class="settings-back" id="chat-settings-back">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+        <h2>Settings</h2>
+      </div>
+
+      <div class="settings-body">
+        <div class="settings-group">
+          <label class="settings-label">What should Joy call you?</label>
+          <input id="settings-joy-name" class="settings-input" type="text" placeholder="Nama panggilan kamu"
+            maxlength="20" />
+        </div>
+
+        <div class="settings-group">
+          <label class="settings-label">Censored Words</label>
+          <div id="settings-censored-list" class="settings-tags"></div>
+          <input id="settings-add-word" class="settings-input" type="text" placeholder="Ketik kata + Enter"
+            maxlength="20" style="margin-top:8px;" />
+        </div>
+
+        <div class="settings-group">
+          <div class="settings-row">
+            <span class="settings-label">Tone</span>
+            <div class="settings-tags">
+              <span class="settings-tag tone-option active" data-value="Honest">Honest</span>
+              <span class="settings-tag tone-option" data-value="Gentle">Gentle</span>
+              <span class="settings-tag tone-option" data-value="Playful">Playful</span>
+            </div>
           </div>
         </div>
 
-        <div class="chat-input-area">
-          <div class="chat-input-box">
-            <button class="btn-chat-action" title="Image">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                <circle cx="8.5" cy="8.5" r="1.5" />
-                <polyline points="21 15 16 10 5 21" />
-              </svg>
-            </button>
-            <textarea id="chat-input" class="chat-input" placeholder="Ayo ungkapkan isi hatimu" rows="1"></textarea>
-            <button class="btn-mic" id="chat-mic-btn" title="Voice input">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
-                <path d="M19 10v2a7 7 0 01-14 0v-2" />
-                <line x1="12" y1="19" x2="12" y2="23" />
-                <line x1="8" y1="23" x2="16" y2="23" />
-              </svg>
-            </button>
-            <button class="chat-send" id="chat-send-btn">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <div class="settings-group">
+          <div class="settings-row">
+            <span class="settings-label">Desired Output</span>
+            <div class="settings-tags">
+              <span class="settings-tag output-option active" data-value="Assuring">Assuring</span>
+              <span class="settings-tag output-option" data-value="Direct">Direct</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <div class="settings-row">
+            <span class="settings-label">Language</span>
+            <div class="settings-tags">
+              <span class="settings-tag lang-option active" data-value="Indonesian">Indonesian</span>
+              <span class="settings-tag lang-option" data-value="English">English</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-group" style="border-top:1px solid var(--gray-200);padding-top:20px;">
+          <h3 style="font-size:16px;font-weight:800;color:var(--text-dark);margin-bottom:8px;">Notifications</h3>
+          <div class="settings-row">
+            <span class="settings-label">Notify when Joy responses</span>
+            <div class="toggle" id="settings-notify-toggle"></div>
+          </div>
+        </div>
+
+        <button class="btn-save-settings" id="settings-save-btn">
+          <span class="save-icon">💾</span>
+          Simpan Settings
+        </button>
+      </div>
+    </div>
+
+    <!-- -- SCREEN: MOOD CALENDAR (Full Month) -- -->
+    <div id="screen-mood" class="screen hidden">
+      <div class="mood-header">
+        <button class="settings-back" onclick="showScreen('home')">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+        <h2>Daily Check-in</h2>
+      </div>
+
+      <div class="mood-scroll">
+        <!-- Calendar -->
+        <div id="mood-calendar">
+          <!-- Rendered by JS -->
+        </div>
+
+        <button class="btn-log-day" onclick="showScreen('log-day')" style="margin-top:8px;">Log your day</button>
+
+        <!-- Mood Trend -->
+        <div id="mood-trend">
+          <!-- Rendered by JS -->
+        </div>
+
+        <!-- Recommendations -->
+        <div class="mood-recommendations">
+          <div class="mood-rec-title">
+            🌿 Cocok buat kondisi mood kamu saat ini
+          </div>
+          <div class="mood-rec-card">
+            <h4>1. Journaling</h4>
+            <p>Manfaatkan fitur Journal buat ngeluapin perasaan-perasaanmu!</p>
+            <a onclick="showScreen('journal')" style="cursor:pointer;">Go to Journal →</a>
+          </div>
+          <div class="mood-rec-card">
+            <h4>2. Move your body!</h4>
+            <p>Video video peregangan ringan yang sesuai dengan kondisi mood kamu saat ini.</p>
+            <a id="rec-video-link" href="#" target="_blank" style="cursor:pointer;">Go to Video →</a>
+          </div>
+          <div class="mood-rec-card">
+            <h4>3. Get your deep sleep</h4>
+            <p>Matikan layar gawai 1 jam sebelum tidur dan tidur awal biar lebih fresh~</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Nav (cloned for this screen) -->
+      <nav class="bottom-nav">
+        <button class="nav-item" data-screen="home">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z" />
+          </svg>
+          <span>Home</span>
+        </button>
+        <button class="nav-item active" data-screen="mood">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+          <span>Mood</span>
+        </button>
+        <button class="nav-item nav-center" data-screen="log-day">
+          <div class="nav-icon">💛</div>
+        </button>
+        <button class="nav-item" data-screen="chat">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+          </svg>
+          <span>Chat</span>
+        </button>
+        <button class="nav-item" data-screen="account">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <span>Profile</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- -- SCREEN: LOG YOUR DAY -- -->
+    <div id="screen-log-day" class="screen hidden">
+      <div class="log-header">
+        <button class="log-back" onclick="showScreen('mood')">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+        <h2>How do you feel?</h2>
+      </div>
+
+      <div class="log-scroll">
+        <p class="log-date" id="log-date-display"></p>
+
+        <!-- Mood Gradient Circle -->
+        <div class="mood-gradient-circle" id="mood-gradient-circle">
+          <span class="mood-gradient-prompt" id="mood-circle-text">Pilih emosi kamu</span>
+        </div>
+
+        <p id="mood-label" style="font-size:15px;font-weight:700;color:var(--text-mid);text-align:center;">Kamu bisa
+          pilih lebih dari satu emosi</p>
+
+        <!-- Emotion Tags -->
+        <div class="emotion-tags" id="emotion-tags">
+          <button class="emotion-tag" data-emotion="Angry">Angry</button>
+          <button class="emotion-tag" data-emotion="Depressed">Depressed</button>
+          <button class="emotion-tag" data-emotion="Sad">Sad</button>
+          <button class="emotion-tag" data-emotion="Happy">Happy</button>
+          <button class="emotion-tag" data-emotion="Displeased">Displeased</button>
+          <button class="emotion-tag" data-emotion="Calm">Calm</button>
+          <button class="emotion-tag" data-emotion="Fear">Fear</button>
+          <button class="emotion-tag" data-emotion="Empty">Empty</button>
+          <button class="emotion-tag" data-emotion="Anxious">Anxious</button>
+          <button class="emotion-tag" data-emotion="In-love">In-love</button>
+        </div>
+        <!-- Joy Help — AI Emotion Detection -->
+        <div class="joy-help-section">
+          <p>Can't seem to understand yourself?</p>
+          <h3>Let Joy help you!</h3>
+          <div class="joy-help-input">
+            <input type="text" id="mood-note" placeholder="Ceritain aja perasaan kamu..." />
+            <button class="joy-help-send" id="mood-detect-btn" title="Minta Joy deteksi emosi kamu">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
               </svg>
             </button>
           </div>
-        </div>
-      </div>
-
-      <!-- ===================================================================
-       SCREEN: CHAT SETTINGS
-       =================================================================== -->
-      <div id="screen-chat-settings" class="screen hidden">
-        <div class="settings-header">
-          <button class="settings-back" id="chat-settings-back">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-          </button>
-          <h2>Settings</h2>
+          <p class="joy-detect-result" id="joy-detect-result"></p>
         </div>
 
-        <div class="settings-body">
-          <div class="settings-group">
-            <label class="settings-label">What should Joy call you?</label>
-            <input id="settings-joy-name" class="settings-input" type="text" placeholder="Nama panggilan kamu"
-              maxlength="20" />
-          </div>
-
-          <div class="settings-group">
-            <label class="settings-label">Censored Words</label>
-            <div id="settings-censored-list" class="settings-tags"></div>
-            <input id="settings-add-word" class="settings-input" type="text" placeholder="Ketik kata + Enter"
-              maxlength="20" style="margin-top:8px;" />
-          </div>
-
-          <div class="settings-group">
-            <div class="settings-row">
-              <span class="settings-label">Tone</span>
-              <div class="settings-tags">
-                <span class="settings-tag tone-option active" data-value="Honest">Honest</span>
-                <span class="settings-tag tone-option" data-value="Gentle">Gentle</span>
-                <span class="settings-tag tone-option" data-value="Playful">Playful</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="settings-group">
-            <div class="settings-row">
-              <span class="settings-label">Desired Output</span>
-              <div class="settings-tags">
-                <span class="settings-tag output-option active" data-value="Assuring">Assuring</span>
-                <span class="settings-tag output-option" data-value="Direct">Direct</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="settings-group">
-            <div class="settings-row">
-              <span class="settings-label">Language</span>
-              <div class="settings-tags">
-                <span class="settings-tag active">Indonesian</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="settings-group" style="border-top:1px solid var(--gray-200);padding-top:20px;">
-            <h3 style="font-size:16px;font-weight:800;color:var(--text-dark);margin-bottom:8px;">Notifications</h3>
-            <div class="settings-row">
-              <span class="settings-label">Notify when Joy responses</span>
-              <div class="toggle" id="settings-notify-toggle"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ===================================================================
-       SCREEN: MOOD CALENDAR (Full Month)
-       =================================================================== -->
-      <div id="screen-mood" class="screen hidden">
-        <div class="mood-header">
-          <button class="settings-back" onclick="showScreen('home')">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-          </button>
-          <h2>Daily Check-in</h2>
-        </div>
-
-        <div class="mood-scroll">
-          <!-- Calendar -->
-          <div id="mood-calendar">
-            <!-- Rendered by JS -->
-          </div>
-
-          <button class="btn-log-day" onclick="showScreen('log-day')" style="margin-top:8px;">Log your day</button>
-
-          <!-- Mood Trend -->
-          <div id="mood-trend">
-            <!-- Rendered by JS -->
-          </div>
-
-          <!-- Recommendations -->
-          <div class="mood-recommendations">
-            <div class="mood-rec-title">
-              🌿 Cocok buat kamu yang lagi burnt out!
-            </div>
-            <div class="mood-rec-card">
-              <h4>1. Journaling</h4>
-              <p>Manfaatkan fitur Journal buat ngeluapin perasaan-perasaanmu!</p>
-              <a>Go to Journal →</a>
-            </div>
-            <div class="mood-rec-card">
-              <h4>2. Move your body!</h4>
-              <p>Lakukan peregangan ringan untuk nurunin hormon stresmu.</p>
-              <a>Go to Video →</a>
-            </div>
-            <div class="mood-rec-card">
-              <h4>3. Get your deep sleep</h4>
-              <p>Matikan layar gawai 1 jam sebelum tidur dan tidur awal biar lebih fresh~</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Bottom Nav (cloned for this screen) -->
-        <nav class="bottom-nav">
-          <button class="nav-item" data-screen="home">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path
-                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z" />
-            </svg>
-            <span>Home</span>
-          </button>
-          <button class="nav-item active" data-screen="mood">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-              <line x1="16" y1="2" x2="16" y2="6" />
-              <line x1="8" y1="2" x2="8" y2="6" />
-              <line x1="3" y1="10" x2="21" y2="10" />
-            </svg>
-            <span>Mood</span>
-          </button>
-          <button class="nav-item nav-center" data-screen="log-day">
-            <div class="nav-icon">💛</div>
-          </button>
-          <button class="nav-item" data-screen="chat">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
-            </svg>
-            <span>Chat</span>
-          </button>
-          <button class="nav-item" data-screen="account">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-            <span>Profile</span>
-          </button>
-        </nav>
-      </div>
-
-      <!-- ===================================================================
-       SCREEN: LOG YOUR DAY
-       =================================================================== -->
-      <div id="screen-log-day" class="screen hidden">
-        <div class="log-header">
-          <button class="log-back" onclick="showScreen('mood')">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-          </button>
-          <h2>How do you feel?</h2>
-        </div>
-
-        <div class="log-scroll">
-          <p class="log-date" id="log-date-display"></p>
-
-          <!-- Mood Score -->
-          <div class="mood-score-circle">
-            <span class="mood-score-value" id="mood-score-display">5</span>
-          </div>
-
-          <input type="range" class="mood-score-slider" id="mood-slider" min="1" max="10" value="5" />
-
-          <p id="mood-label" style="font-size:16px;font-weight:800;color:var(--purple-mid);text-align:center;">Pilih
-            mood kamu hari ini</p>
-
-          <!-- Emotion Tags -->
-          <div class="emotion-tags" id="emotion-tags">
-            <button class="emotion-tag angry" data-emotion="Angry">Angry</button>
-            <button class="emotion-tag" data-emotion="Depressed">Depressed</button>
-            <button class="emotion-tag sad" data-emotion="Sad">Sad</button>
-            <button class="emotion-tag happy" data-emotion="Happy">Happy</button>
-            <button class="emotion-tag" data-emotion="Displeased">Displeased</button>
-            <button class="emotion-tag calm" data-emotion="Calm">Calm</button>
-            <button class="emotion-tag" data-emotion="Fear">Fear</button>
-            <button class="emotion-tag" data-emotion="Empty">Empty</button>
-            <button class="emotion-tag" data-emotion="Anxious">Anxious</button>
-            <button class="emotion-tag" data-emotion="In-love">In-love</button>
-          </div>
-
-          <!-- Joy Help -->
-          <div class="joy-help-section">
-            <p>Can't seem to understand yourself?</p>
-            <h3>Let Joy help you!</h3>
-            <div class="joy-help-input">
-              <input type="text" id="mood-note" placeholder="Describe your emotions" />
-              <button class="joy-help-send" id="mood-save-btn">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ===================================================================
-       SCREEN: ACCOUNT
-       =================================================================== -->
-      <div id="screen-account" class="screen hidden">
-        <div class="account-scroll">
-          <!-- Header -->
-          <div class="account-header">
-            <div class="account-profile">
-              <div class="account-avatar-placeholder" id="account-avatar-letter">U</div>
-              <span class="account-name" id="account-name">User</span>
-            </div>
-            <button class="btn-logout" id="account-logout-btn">Log Out</button>
-          </div>
-
-          <!-- Guardian Card -->
-          <div class="guardian-card" id="guardian-card">
-            <!-- Rendered by JS -->
-          </div>
-
-          <!-- Menu -->
-          <div class="account-menu">
-            <div class="account-menu-section">
-              <h3 class="account-menu-title">Account</h3>
-              <div class="account-menu-item" id="account-edit-profile">
-                <span>Edit Profile</span>
-                <span class="menu-arrow">›</span>
-              </div>
-              <div class="account-menu-item">
-                <span>Personalization</span>
-                <span class="menu-arrow">›</span>
-              </div>
-            </div>
-
-            <div class="account-menu-section">
-              <h3 class="account-menu-title">Accessibility</h3>
-              <div class="account-menu-item">
-                <span>Text Settings</span>
-                <span class="menu-arrow">›</span>
-              </div>
-              <div class="account-menu-item">
-                <span>Text-to-Speech</span>
-                <div class="toggle" id="account-tts-toggle"></div>
-              </div>
-            </div>
-
-            <div class="account-menu-section">
-              <h3 class="account-menu-title">Privacy</h3>
-              <div class="account-menu-item">
-                <span>Manage Guardian Access</span>
-                <span class="menu-arrow">›</span>
-              </div>
-              <div class="account-menu-item">
-                <span>Permissions</span>
-                <span class="menu-arrow">›</span>
-              </div>
-              <div class="account-menu-item">
-                <span>Data Biometrics</span>
-                <span class="menu-arrow">›</span>
-              </div>
-              <div class="account-menu-item danger" id="account-delete">
-                <span>Delete My Data</span>
-                <span class="menu-arrow">›</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Bottom Nav -->
-        <nav class="bottom-nav">
-          <button class="nav-item" data-screen="home">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path
-                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z" />
-            </svg>
-            <span>Home</span>
-          </button>
-          <button class="nav-item" data-screen="mood">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-              <line x1="16" y1="2" x2="16" y2="6" />
-              <line x1="8" y1="2" x2="8" y2="6" />
-              <line x1="3" y1="10" x2="21" y2="10" />
-            </svg>
-            <span>Mood</span>
-          </button>
-          <button class="nav-item nav-center" data-screen="log-day">
-            <div class="nav-icon">💛</div>
-          </button>
-          <button class="nav-item" data-screen="chat">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
-            </svg>
-            <span>Chat</span>
-          </button>
-          <button class="nav-item active" data-screen="account">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-            <span>Profile</span>
-          </button>
-        </nav>
-      </div>
-
-      <!-- ===================================================================
-       SCREEN: EDIT PROFILE
-       =================================================================== -->
-      <div id="screen-edit-profile" class="screen hidden">
-        <div class="edit-profile-header">
-          <button class="settings-back" id="edit-profile-back">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-          </button>
-          <h2>Edit Profile</h2>
-        </div>
-
-        <div class="edit-profile-scroll">
-          <!-- Avatar -->
-          <div class="edit-avatar-wrapper">
-            <div class="edit-avatar-placeholder" id="edit-avatar-letter">U</div>
-            <div class="edit-avatar-btn">✏</div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Display Name</label>
-            <input id="edit-display-name" class="form-input" type="text" placeholder="Nama kamu" maxlength="30" />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Date of Birth</label>
-            <input id="edit-dob" class="form-input" type="date" />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Location</label>
-            <input id="edit-location" class="form-input" type="text" placeholder="Indonesia" />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">E-mail</label>
-            <input id="edit-email" class="form-input" type="email" placeholder="email@example.com" disabled
-              style="opacity:0.6;" />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Phone Number</label>
-            <input id="edit-phone" class="form-input" type="tel" placeholder="(+62) 8XX XXXX XXXX" />
-          </div>
-
-          <button class="btn-save-profile" id="edit-profile-save">Simpan</button>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Delete Account Modal -->
-    <div class="modal-overlay" id="delete-modal">
-      <div class="modal-card">
-        <h3>Hapus Akun?</h3>
-        <p>Semua data kamu akan dihapus secara permanen dan tidak bisa dikembalikan. Yakin mau lanjut?</p>
-        <div class="modal-actions">
-          <button class="btn-modal-danger" id="delete-confirm-btn">Hapus Akun</button>
-          <button class="btn-modal-cancel" id="delete-cancel-btn">Batal</button>
-        </div>
+        <!-- Save Button -->
+        <button class="btn-save-emotions" id="mood-save-btn">
+          Simpan Emosi Hari Ini 💛
+        </button>
       </div>
     </div>
 
-    <!-- Toast -->
-    <div id="app-toast" class="toast"></div>
+    <!-- -- SCREEN: ACCOUNT -- -->
+    <div id="screen-account" class="screen hidden">
+      <div class="account-scroll">
+        <!-- Header -->
+        <div class="account-header">
+          <div class="account-profile">
+            <div class="account-avatar-placeholder" id="account-avatar-letter">U</div>
+            <span class="account-name" id="account-name">User</span>
+          </div>
+          <button class="btn-logout" id="account-logout-btn">Log Out</button>
+        </div>
 
-    <!-- Scripts (order matters) -->
-    <script src="js/utils.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/chat.js"></script>
-    <script src="js/mood.js"></script>
-    <script src="js/account.js"></script>
-    <script src="js/app.js"></script>
+        <!-- Guardian Card -->
+        <div class="guardian-card" id="guardian-card">
+          <!-- Rendered by JS -->
+        </div>
 
-    <!-- Inline: Log Your Day init -->
-    <script>
-      // Mood slider interaction
-      const moodSlider = document.getElementById('mood-slider');
-      const moodDisplay = document.getElementById('mood-score-display');
-      const moodLabel = document.getElementById('mood-label');
-      const moodCircle = document.querySelector('.mood-score-circle');
+        <!-- Menu -->
+        <div class="account-menu">
+          <div class="account-menu-section">
+            <h3 class="account-menu-title">Account</h3>
+            <div class="account-menu-item" id="account-edit-profile">
+              <span>Edit Profile</span>
+              <span class="menu-arrow">›</span>
+            </div>
+            <div class="account-menu-item">
+              <span>Personalization</span>
+              <span class="menu-arrow">›</span>
+            </div>
+          </div>
 
-      if (moodSlider) {
-        moodSlider.addEventListener('input', () => {
-          const val = parseInt(moodSlider.value);
-          moodDisplay.textContent = val;
-          moodLabel.textContent = VarjoyApp.moodLabel(val);
-          moodLabel.style.color = VarjoyApp.moodColor(val);
-          moodCircle.style.background = VarjoyApp.moodColor(val) + '33'; // with alpha
-          Mood.selectedScore = val;
-        });
+          <div class="account-menu-section">
+            <h3 class="account-menu-title">Accessibility</h3>
+            <div class="account-menu-item">
+              <span>Text Settings</span>
+              <span class="menu-arrow">›</span>
+            </div>
+            <div class="account-menu-item">
+              <span>Text-to-Speech</span>
+              <div class="toggle" id="account-tts-toggle"></div>
+            </div>
+          </div>
+
+          <div class="account-menu-section">
+            <h3 class="account-menu-title">Privacy</h3>
+            <div class="account-menu-item">
+              <span>Manage Guardian Access</span>
+              <span class="menu-arrow">›</span>
+            </div>
+            <div class="account-menu-item">
+              <span>Permissions</span>
+              <span class="menu-arrow">›</span>
+            </div>
+            <div class="account-menu-item">
+              <span>Data Biometrics</span>
+              <span class="menu-arrow">›</span>
+            </div>
+            <div class="account-menu-item danger" id="account-delete">
+              <span>Delete My Data</span>
+              <span class="menu-arrow">›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <nav class="bottom-nav">
+        <button class="nav-item" data-screen="home">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z" />
+          </svg>
+          <span>Home</span>
+        </button>
+        <button class="nav-item" data-screen="mood">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+          <span>Mood</span>
+        </button>
+        <button class="nav-item nav-center" data-screen="log-day">
+          <div class="nav-icon">💛</div>
+        </button>
+        <button class="nav-item" data-screen="chat">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+          </svg>
+          <span>Chat</span>
+        </button>
+        <button class="nav-item active" data-screen="account">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <span>Profile</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- -- SCREEN: EDIT PROFILE -- -->
+    <div id="screen-edit-profile" class="screen hidden">
+      <div class="edit-profile-header">
+        <button class="settings-back" id="edit-profile-back">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+        <h2>Edit Profile</h2>
+      </div>
+
+      <div class="edit-profile-scroll">
+        <!-- Avatar -->
+        <div class="edit-avatar-wrapper">
+          <div class="edit-avatar-placeholder" id="edit-avatar-letter">U</div>
+          <div class="edit-avatar-btn">✏</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Display Name</label>
+          <input id="edit-display-name" class="form-input" type="text" placeholder="Nama kamu" maxlength="30" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Date of Birth</label>
+          <input id="edit-dob" class="form-input" type="date" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Location</label>
+          <input id="edit-location" class="form-input" type="text" placeholder="Indonesia" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">E-mail</label>
+          <input id="edit-email" class="form-input" type="email" placeholder="email@example.com" disabled
+            style="opacity:0.6;" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input id="edit-phone" class="form-input" type="tel" placeholder="(+62) 8XX XXXX XXXX" />
+        </div>
+
+        <button class="btn-save-profile" id="edit-profile-save">Simpan</button>
+      </div>
+    </div>
+
+    <!-- SCREEN: RESET PASSWORD -->
+    <div id="screen-reset-password" class="screen hidden">
+      <div style="
+    background: #a0d5a2;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 28px;
+    gap: 24px;
+  ">
+        <!-- Logo -->
+        <div style="text-align:center;">
+          <p style="font-size:16px;font-weight:700;color:var(--white);opacity:0.85;">Buat password baru untuk</p>
+          <h1
+            style="font-family:'Yellowtail',cursive;font-size:56px;color:var(--yellow);text-shadow:0 2px 8px rgba(0,0,0,0.2);">
+            Varjoy</h1>
+        </div>
+
+        <!-- Card -->
+        <div style="
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      padding: 32px 24px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: var(--shadow-lg);
+    ">
+          <h2 style="font-size:18px;font-weight:800;color:var(--text-dark);text-align:center;">Reset Password 🔐</h2>
+          <p style="font-size:13px;color:var(--text-mid);text-align:center;font-weight:600;">Masukkan password baru kamu
+            ya</p>
+
+          <div id="reset-error" class="auth-error"></div>
+
+          <div style="position:relative;">
+            <input id="reset-new-password" class="auth-input" type="password"
+              placeholder="Password baru (min. 6 karakter)"
+              style="background:var(--gray-100);border-color:var(--gray-200);" />
+          </div>
+
+          <div style="position:relative;">
+            <input id="reset-confirm-password" class="auth-input" type="password" placeholder="Konfirmasi password baru"
+              style="background:var(--gray-100);border-color:var(--gray-200);" />
+          </div>
+
+          <button id="reset-submit-btn" class="btn-auth" style="margin-top:4px;">
+            Simpan Password
+          </button>
+        </div>
+
+        <!-- Back -->
+        <p onclick="showScreen('auth')" style="
+      font-size:13px;font-weight:700;
+      color:var(--white);opacity:0.8;
+      cursor:pointer;text-decoration:underline;
+    ">Kembali ke halaman masuk</p>
+      </div>
+    </div>
+
+  <!-- Delete Account Modal -->
+  <div class="modal-overlay" id="delete-modal">
+    <div class="modal-card">
+      <h3>Hapus Akun?</h3>
+            <div class="modal-actions">
+        <button class="btn-modal-danger" id="delete-confirm-btn">Hapus Akun</button>
+        <button class="btn-modal-cancel" id="delete-cancel-btn">Batal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- -- SCREEN: JOURNAL -- -->
+    <div id="screen-journal" class="screen hidden" style="background-color: #FFF2A8;">
+      <div class="log-header" style="justify-content: space-between;">
+        <button class="log-back" onclick="showScreen('home')">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+        <h2 style="color: var(--purple-mid);">Journal</h2>
+        <button class="log-back" onclick="showScreen('journal-write')" style="padding: 4px; border: 1px solid var(--purple-mid); border-radius: 8px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 20h9"></path>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="log-scroll" id="journal-feed" style="padding-top: 16px; padding-bottom: 80px;">
+        <!-- Loaded via JS -->
+      </div>
+    </div>
+
+    <!-- -- SCREEN: JOURNAL WRITE -- -->
+    <div id="screen-journal-write" class="screen hidden" style="background-color: var(--white);">
+      <div class="log-header" style="justify-content: space-between;">
+        <button class="log-back" onclick="showScreen('journal')">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+        <h2 style="color: var(--purple-mid); font-family: 'Caveat', cursive; font-size: 28px;" id="journal-write-date"></h2>
+        <div style="width: 22px;"></div> <!-- Spacer -->
+      </div>
+      
+      <div class="journal-write-area">
+        <textarea id="journal-input" placeholder="Tulis sesuatu..."></textarea>
+      </div>
+
+      <div style="padding: 16px;">
+        <button class="btn-save-emotions" id="journal-save-btn">Save Entry</button>
+      </div>
+    </div>
+
+  </div> <!-- End phone -->
+
+  <!-- Toast -->
+  <div id="app-toast" class="toast"></div>
+
+  <!-- Scripts (order matters) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/utils.js?v=1.1"></script>
+  <script src="js/auth.js?v=1.1"></script>
+  <script src="js/chat.js?v=1.7"></script>
+  <script src="js/mood.js?v=1.4"></script>
+  <script src="js/account.js?v=1.8"></script>
+  <script src="js/journal.js?v=2.1"></script>
+  <script src="js/app.js?v=1.8"></script>
+
+  <!-- Fix for iOS/Android Keyboard Resize Bug -->
+  <script>
+    function updateVVP() {
+      if (window.visualViewport) {
+        document.documentElement.style.setProperty('--vvp-height', `${window.visualViewport.height}px`);
+      } else {
+        document.documentElement.style.setProperty('--vvp-height', `${window.innerHeight}px`);
       }
+      window.scrollTo(0, 0); // Prevent document scroll offset
+    }
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', updateVVP);
+      window.visualViewport.addEventListener('scroll', updateVVP);
+    }
+    window.addEventListener('resize', updateVVP);
+    updateVVP();
+  </script>
 
-      // Set today's date
-      const logDateEl = document.getElementById('log-date-display');
-      if (logDateEl) {
-        const now = new Date();
-        logDateEl.textContent = VarjoyApp.formatDate(now);
-      }
+  <!-- Inline: Log Your Day init -->
+  <script>
+    // Set today's date
+    const logDateEl = document.getElementById('log-date-display');
+    if (logDateEl) {
+      const now = new Date();
+      logDateEl.textContent = VarjoyApp.formatDate(now);
+    }
 
-      // Emotion tag toggling
-      document.querySelectorAll('.emotion-tag').forEach(tag => {
-        tag.addEventListener('click', () => {
-          tag.classList.toggle('selected');
-        });
-      });
+    // Emotion tag toggling with colors
+    document.querySelectorAll('.emotion-tag').forEach(tag => {
+      // Set initial border color from data attribute
+      const color = tag.dataset.color;
+      if (color) tag.style.borderColor = color;
 
-      // Save mood from Log Your Day screen
-      document.getElementById('mood-save-btn')?.addEventListener('click', async () => {
-        const score = Mood.selectedScore || parseInt(moodSlider?.value || '5');
-        const selectedEmotions = [...document.querySelectorAll('.emotion-tag.selected')]
-          .map(t => t.dataset.emotion);
-        const note = document.getElementById('mood-note')?.value.trim();
+      tag.addEventListener('click', () => {
+        const emotion = tag.dataset.emotion;
+        tag.classList.toggle('selected');
 
-        const fullNote = [
-          selectedEmotions.length ? `Emotions: ${selectedEmotions.join(', ')}` : '',
-          note || ''
-        ].filter(Boolean).join(' | ');
-
-        try {
-          await VarjoyApp.post('/mood', {
-            score: score,
-            note: fullNote || null
-          });
-
-          VarjoyApp.showToast('Emotion Added! 💛');
-
-          // Reset
-          document.querySelectorAll('.emotion-tag').forEach(t => t.classList.remove('selected'));
-          document.getElementById('mood-note').value = '';
-          moodSlider.value = 5;
-          moodDisplay.textContent = '5';
-
-          // Go back to mood calendar
-          setTimeout(() => {
-            showScreen('mood');
-            Mood.loadHistory();
-          }, 1200);
-
-        } catch (err) {
-          console.error('Save mood error:', err);
-          VarjoyApp.showToast('Gagal menyimpan, coba lagi ya');
+        // Apply color when selected
+        if (tag.classList.contains('selected')) {
+          tag.style.background = color;
+          tag.style.borderColor = color;
+          tag.style.color = '#fff';
+        } else {
+          tag.style.background = 'var(--white)';
+          tag.style.borderColor = color;
+          tag.style.color = 'var(--text-dark)';
         }
+
+        Mood.toggleEmotion(emotion);
       });
-    </script>
+    });
+
+    // AI Emotion Detection
+    document.getElementById('mood-detect-btn')?.addEventListener('click', () => {
+      Mood.detectEmotion();
+    });
+
+    // Also detect on Enter key
+    document.getElementById('mood-note')?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        Mood.detectEmotion();
+      }
+    });
+
+    // Save emotions
+    document.getElementById('mood-save-btn')?.addEventListener('click', () => {
+      Mood.saveEmotions();
+    });
+  </script>
 
 </body>
 

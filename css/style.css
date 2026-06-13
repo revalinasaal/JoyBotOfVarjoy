@@ -1,105 +1,116 @@
-/* ============================================================
-   VARJOY — Design System & Full Stylesheet
-   Based on Figma designs
-   ============================================================ */
+/* -- VARJOY — Design System & Full Stylesheet
+   Based on Figma designs -- */
 
-/* ---- Google Fonts ---- */
+/* -- Google Fonts -- */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Yellowtail&display=swap');
 
-/* ---- CSS Variables / Design Tokens ---- */
+/* -- CSS Variables / Design Tokens -- */
 :root {
   /* Primary Purple */
-  --purple-dark:    #3B1F6E;
-  --purple-mid:     #6B3FA0;
-  --purple-light:   #B89BE2;
-  --purple-pale:    #EDE4F8;
-  --purple-bg:      #F0E8FF;
+  --purple-dark: #957dc6;
+  --purple-mid: #9459db;
+  --purple-light: #B89BE2;
+  --purple-pale: #EDE4F8;
+  --purple-bg: #F0E8FF;
 
   /* Yellow / Gold */
-  --yellow:         #F5D97A;
-  --yellow-bg:      #FDF3C8;
-  --yellow-header:  #F5E08C;
-  --yellow-dark:    #D4B44A;
+  --yellow: #F5D97A;
+  --yellow-bg: #FDF3C8;
+  --yellow-header: #F5E08C;
+  --yellow-dark: #D4B44A;
 
   /* Green */
-  --green-mint:     #7BB595;
-  --green-light:    #A8D5BA;
-  --green-pale:     #E8F5E9;
+  --green-mint: #7BB595;
+  --green-light: #A8D5BA;
+  --green-pale: #E8F5E9;
 
   /* Mood Colors */
-  --mood-1:  #E53935;  /* Very Bad */
-  --mood-2:  #E57373;
-  --mood-3:  #FF8A65;
-  --mood-4:  #FFB74D;
-  --mood-5:  #FFD54F;
-  --mood-6:  #FFF176;
-  --mood-7:  #AED581;
-  --mood-8:  #81C784;
-  --mood-9:  #4DB6AC;
-  --mood-10: #26A69A; /* Very Good */
+  --mood-1: #E53935;
+  /* Very Bad */
+  --mood-2: #E57373;
+  --mood-3: #FF8A65;
+  --mood-4: #FFB74D;
+  --mood-5: #FFD54F;
+  --mood-6: #FFF176;
+  --mood-7: #AED581;
+  --mood-8: #81C784;
+  --mood-9: #4DB6AC;
+  --mood-10: #26A69A;
+  /* Very Good */
 
   /* Chat */
-  --bubble-joy:   #B89BE2;
-  --bubble-user:  #F5D97A;
-  --bg-chat:      #FDF8FF;
+  --bubble-joy: #B89BE2;
+  --bubble-user: #F5D97A;
+  --bg-chat: #FDF8FF;
 
   /* Neutrals */
-  --white:        #FFFFFF;
-  --gray-50:      #FAFAFA;
-  --gray-100:     #F5F5F5;
-  --gray-200:     #EEEEEE;
-  --gray-300:     #E0E0E0;
-  --gray-400:     #BDBDBD;
-  --gray-500:     #9E9E9E;
-  --gray-600:     #757575;
-  --gray-700:     #616161;
+  --white: #FFFFFF;
+  --gray-50: #FAFAFA;
+  --gray-100: #F5F5F5;
+  --gray-200: #EEEEEE;
+  --gray-300: #E0E0E0;
+  --gray-400: #BDBDBD;
+  --gray-500: #9E9E9E;
+  --gray-600: #757575;
+  --gray-700: #616161;
 
   /* Text */
-  --text-dark:    #2D1B4E;
-  --text-mid:     #5C3D8F;
-  --text-light:   #9575CD;
-  --text-muted:   #BDBDBD;
+  --text-dark: #2D1B4E;
+  --text-mid: #5C3D8F;
+  --text-light: #9575CD;
+  --text-muted: #BDBDBD;
 
   /* Spacing */
-  --space-xs:  4px;
-  --space-sm:  8px;
-  --space-md:  16px;
-  --space-lg:  24px;
-  --space-xl:  32px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
   --space-2xl: 48px;
 
   /* Radius */
-  --radius-sm:   8px;
-  --radius-md:   16px;
-  --radius-lg:   24px;
-  --radius-xl:   32px;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
   --radius-full: 9999px;
 
   /* Shadows */
-  --shadow-sm:  0 2px 8px rgba(59, 31, 110, 0.06);
-  --shadow-md:  0 4px 16px rgba(59, 31, 110, 0.1);
-  --shadow-lg:  0 8px 32px rgba(59, 31, 110, 0.15);
-  --shadow-xl:  0 16px 48px rgba(59, 31, 110, 0.2);
+  --shadow-sm: 0 2px 8px rgba(59, 31, 110, 0.06);
+  --shadow-md: 0 4px 16px rgba(59, 31, 110, 0.1);
+  --shadow-lg: 0 8px 32px rgba(59, 31, 110, 0.15);
+  --shadow-xl: 0 16px 48px rgba(59, 31, 110, 0.2);
 
   /* Transitions */
-  --transition-fast:   0.15s ease;
+  --transition-fast: 0.15s ease;
   --transition-normal: 0.3s ease;
-  --transition-slow:   0.5s ease;
+  --transition-slow: 0.5s ease;
 
   /* Z-Index */
-  --z-nav:    100;
-  --z-modal:  200;
-  --z-toast:  300;
+  --z-nav: 100;
+  --z-modal: 200;
+  --z-toast: 300;
 }
 
-/* ---- Reset ---- */
-*, *::before, *::after {
+/* -- Reset -- */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html {
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  overscroll-behavior-y: none;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
 }
@@ -107,47 +118,72 @@ html {
 body {
   font-family: 'Nunito', sans-serif;
   background: var(--white);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  overflow: hidden;
   color: var(--text-dark);
   -webkit-font-smoothing: antialiased;
 }
 
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font-family: inherit;
   font-size: inherit;
 }
 
-img { max-width: 100%; display: block; }
-a { text-decoration: none; color: inherit; }
-button { cursor: pointer; border: none; background: none; }
+img {
+  max-width: 100%;
+  display: block;
+}
 
-/* ---- Phone Container ---- */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* -- Phone Container -- */
 .phone {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   width: 100%;
-  max-width: 393px;
-  height: 100dvh;
+  height: var(--vvp-height, 100%);
   background: var(--white);
   overflow: hidden;
-  position: relative;
   display: flex;
   flex-direction: column;
 }
 
 @media (min-width: 768px) {
-  body { background: var(--purple-bg); }
+  body {
+    background: linear-gradient(135deg, #EAE6FF 0%, #D4C8FF 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .phone {
-    max-width: 393px;
-    height: 100dvh;
-    border-radius: 40px;
-    box-shadow: var(--shadow-xl);
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    max-width: 420px; /* Sedikit lebih lebar dari HP tapi pas di Desktop */
+    height: 90dvh; /* Kasih jarak atas bawah biar elegan */
+    max-height: 900px;
+    border-radius: 32px;
+    box-shadow: 0 20px 40px rgba(103, 76, 175, 0.15); /* Shadow ungu soft */
+    border: 8px solid #ffffff; /* Kasih frame putih ala HP */
   }
 }
 
-/* ---- Screen System ---- */
+/* -- Screen System -- */
 .screen {
   position: absolute;
   inset: 0;
@@ -175,17 +211,15 @@ button { cursor: pointer; border: none; background: none; }
   pointer-events: none;
 }
 
-/* ============================================================
-   SCREEN: SPLASH / LANDING ("buka")
-   ============================================================ */
+/* -- SCREEN: SPLASH / LANDING ("buka") -- */
 #screen-splash {
-  background: linear-gradient(180deg, #3B1F6E 0%, #5C3D8F 50%, #7B5CB7 100%);
+  background: linear-gradient(180deg, #9a80cb 0%, #ad7aff 50%, #7B5CB7 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
-  padding: 40px 24px;
+  padding-top: 80px;
   overflow: hidden;
 }
 
@@ -213,7 +247,7 @@ button { cursor: pointer; border: none; background: none; }
 .splash-tagline {
   font-size: 18px;
   font-weight: 700;
-  color: rgba(255,255,255,0.9);
+  color: rgba(255, 255, 255, 0.9);
   letter-spacing: 0.5px;
 }
 
@@ -222,7 +256,7 @@ button { cursor: pointer; border: none; background: none; }
   font-size: 80px;
   color: var(--yellow);
   line-height: 1;
-  text-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 .btn-get-started {
@@ -248,30 +282,28 @@ button { cursor: pointer; border: none; background: none; }
   transform: translateY(0);
 }
 
-/* ============================================================
-   SCREEN: LOGIN / SIGN UP
-   ============================================================ */
+/* -- SCREEN: LOGIN / SIGN UP -- */
 #screen-auth {
-  background: var(--green-mint);
+  background: #a0d5a2;
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .auth-header {
-  background: var(--text-dark);
+  background: transparent;
   width: 100%;
-  padding: 40px 24px 60px;
+  padding: 40px 24px 20px;
   text-align: center;
-  border-radius: 0 0 40px 40px;
   position: relative;
 }
 
 .auth-welcome {
   font-size: 18px;
   font-weight: 700;
-  color: rgba(255,255,255,0.85);
+  color: rgba(255, 255, 255, 0.85);
   margin-bottom: 4px;
 }
 
@@ -280,7 +312,7 @@ button { cursor: pointer; border: none; background: none; }
   font-size: 56px;
   color: var(--yellow);
   line-height: 1.1;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .auth-form-container {
@@ -293,17 +325,19 @@ button { cursor: pointer; border: none; background: none; }
   gap: 14px;
   position: relative;
   z-index: 2;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
 }
 
 .auth-input {
   width: 100%;
   padding: 15px 20px;
-  border: 2px solid rgba(255,255,255,0.5);
+  border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: var(--radius-md);
   font-size: 15px;
   font-weight: 600;
   color: var(--text-dark);
-  background: rgba(255,255,255,0.85);
+  background: rgba(255, 255, 255, 0.85);
   outline: none;
   transition: border-color var(--transition-fast), background var(--transition-fast);
   backdrop-filter: blur(4px);
@@ -377,12 +411,10 @@ button { cursor: pointer; border: none; background: none; }
 }
 
 .auth-character {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  max-width: 300px;
+  display: block;
+  margin: 8px auto 0;
+  width: 55%;
+  max-width: 200px;
   height: auto;
   z-index: 1;
   pointer-events: none;
@@ -415,9 +447,7 @@ button { cursor: pointer; border: none; background: none; }
   width: 100%;
 }
 
-/* ============================================================
-   SCREEN: HOME DASHBOARD
-   ============================================================ */
+/* -- SCREEN: HOME DASHBOARD -- */
 #screen-home {
   background: var(--purple-pale);
   display: flex;
@@ -434,7 +464,9 @@ button { cursor: pointer; border: none; background: none; }
   -webkit-overflow-scrolling: touch;
 }
 
-.home-scroll::-webkit-scrollbar { width: 0; }
+.home-scroll::-webkit-scrollbar {
+  width: 0;
+}
 
 /* Home Header */
 .home-header {
@@ -750,9 +782,7 @@ button { cursor: pointer; border: none; background: none; }
   background: linear-gradient(90deg, var(--purple-light), var(--purple-mid));
 }
 
-/* ============================================================
-   BOTTOM NAVIGATION
-   ============================================================ */
+/* -- BOTTOM NAVIGATION -- */
 .bottom-nav {
   position: absolute;
   bottom: 0;
@@ -765,7 +795,7 @@ button { cursor: pointer; border: none; background: none; }
   padding: 10px 0 16px;
   border-top: 1px solid var(--gray-200);
   z-index: var(--z-nav);
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .nav-item {
@@ -781,7 +811,9 @@ button { cursor: pointer; border: none; background: none; }
   position: relative;
 }
 
-.nav-item:hover { transform: translateY(-1px); }
+.nav-item:hover {
+  transform: translateY(-1px);
+}
 
 .nav-item svg,
 .nav-item .nav-icon {
@@ -830,9 +862,7 @@ button { cursor: pointer; border: none; background: none; }
   background: var(--yellow-dark);
 }
 
-/* ============================================================
-   SCREEN: CHATBOT
-   ============================================================ */
+/* -- SCREEN: CHATBOT -- */
 #screen-chat {
   background: var(--yellow-bg);
   display: flex;
@@ -862,7 +892,9 @@ button { cursor: pointer; border: none; background: none; }
   transition: transform var(--transition-fast);
 }
 
-.chat-back:hover { transform: translateX(-2px); }
+.chat-back:hover {
+  transform: translateX(-2px);
+}
 
 .chat-star {
   background: none;
@@ -911,7 +943,9 @@ button { cursor: pointer; border: none; background: none; }
   transition: color var(--transition-fast);
 }
 
-.chat-settings-btn:hover { color: var(--purple-mid); }
+.chat-settings-btn:hover {
+  color: var(--purple-mid);
+}
 
 /* Chat Messages */
 .chat-messages {
@@ -927,7 +961,9 @@ button { cursor: pointer; border: none; background: none; }
   scroll-behavior: smooth;
 }
 
-.chat-messages::-webkit-scrollbar { width: 0; }
+.chat-messages::-webkit-scrollbar {
+  width: 0;
+}
 
 .bubble {
   max-width: 75%;
@@ -942,8 +978,15 @@ button { cursor: pointer; border: none; background: none; }
 }
 
 @keyframes bubblePop {
-  0% { transform: scale(0.8); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .bubble-joy {
@@ -970,7 +1013,9 @@ button { cursor: pointer; border: none; background: none; }
   display: none;
 }
 
-.bubble-typing.visible { display: block; }
+.bubble-typing.visible {
+  display: block;
+}
 
 .typing-dots span {
   display: inline-block;
@@ -980,19 +1025,32 @@ button { cursor: pointer; border: none; background: none; }
   line-height: 1;
 }
 
-.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
-.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+.typing-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
 
 @keyframes bounce {
-  0%, 60%, 100% { transform: translateY(0); }
-  30% { transform: translateY(-5px); }
+
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+
+  30% {
+    transform: translateY(-5px);
+  }
 }
 
 /* Chat Input Area */
 .chat-input-area {
   background: var(--yellow-bg);
   padding: 12px 16px 20px;
-  border-top: 1px solid rgba(245,217,122,0.6);
+  border-top: 1px solid rgba(245, 217, 122, 0.6);
   flex-shrink: 0;
 }
 
@@ -1039,7 +1097,9 @@ button { cursor: pointer; border: none; background: none; }
   flex-shrink: 0;
 }
 
-.btn-chat-action:hover { color: var(--purple-mid); }
+.btn-chat-action:hover {
+  color: var(--purple-mid);
+}
 
 .btn-mic {
   background: none;
@@ -1055,7 +1115,9 @@ button { cursor: pointer; border: none; background: none; }
   flex-shrink: 0;
 }
 
-.btn-mic:hover { color: var(--purple-mid); }
+.btn-mic:hover {
+  color: var(--purple-mid);
+}
 
 .btn-mic.recording {
   color: #e53935;
@@ -1063,8 +1125,15 @@ button { cursor: pointer; border: none; background: none; }
 }
 
 @keyframes pulse-mic {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.2); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
 }
 
 .chat-send {
@@ -1083,13 +1152,22 @@ button { cursor: pointer; border: none; background: none; }
   transition: background var(--transition-fast), transform var(--transition-fast);
 }
 
-.chat-send:hover { background: var(--purple-dark); transform: scale(1.05); }
-.chat-send:active { transform: scale(0.95); }
-.chat-send:disabled { background: var(--gray-400); cursor: not-allowed; transform: none; }
+.chat-send:hover {
+  background: var(--purple-dark);
+  transform: scale(1.05);
+}
 
-/* ============================================================
-   SCREEN: CHAT SETTINGS
-   ============================================================ */
+.chat-send:active {
+  transform: scale(0.95);
+}
+
+.chat-send:disabled {
+  background: var(--gray-400);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* -- SCREEN: CHAT SETTINGS -- */
 #screen-chat-settings {
   background: var(--white);
 }
@@ -1116,7 +1194,9 @@ button { cursor: pointer; border: none; background: none; }
   transition: transform var(--transition-fast);
 }
 
-.settings-back:hover { transform: translateX(-2px); }
+.settings-back:hover {
+  transform: translateX(-2px);
+}
 
 .settings-body {
   flex: 1;
@@ -1178,8 +1258,15 @@ button { cursor: pointer; border: none; background: none; }
   transition: background var(--transition-fast);
 }
 
-.settings-tag:hover { background: var(--purple-light); color: var(--white); }
-.settings-tag.active { background: var(--purple-mid); color: var(--white); }
+.settings-tag:hover {
+  background: var(--purple-light);
+  color: var(--white);
+}
+
+.settings-tag.active {
+  background: var(--purple-mid);
+  color: var(--white);
+}
 
 /* Toggle Switch */
 .toggle {
@@ -1192,7 +1279,9 @@ button { cursor: pointer; border: none; background: none; }
   transition: background var(--transition-fast);
 }
 
-.toggle.active { background: var(--purple-mid); }
+.toggle.active {
+  background: var(--purple-mid);
+}
 
 .toggle::after {
   content: '';
@@ -1207,11 +1296,58 @@ button { cursor: pointer; border: none; background: none; }
   box-shadow: var(--shadow-sm);
 }
 
-.toggle.active::after { transform: translateX(24px); }
+.toggle.active::after {
+  transform: translateX(24px);
+}
 
-/* ============================================================
-   SCREEN: MOOD CALENDAR (Full Month)
-   ============================================================ */
+/* Save Settings Button */
+.btn-save-settings {
+  width: 100%;
+  background: linear-gradient(135deg, var(--purple-mid), var(--purple-dark));
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+  box-shadow: var(--shadow-md);
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  letter-spacing: 0.3px;
+}
+
+.btn-save-settings:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-save-settings:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-save-settings:disabled {
+  background: var(--gray-400);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-save-settings.saved {
+  background: linear-gradient(135deg, var(--green-mint), #5a9e73);
+}
+
+.btn-save-settings .save-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* -- SCREEN: MOOD CALENDAR (Full Month) -- */
 #screen-mood {
   background: var(--white);
 }
@@ -1240,7 +1376,9 @@ button { cursor: pointer; border: none; background: none; }
   gap: 20px;
 }
 
-.mood-scroll::-webkit-scrollbar { width: 0; }
+.mood-scroll::-webkit-scrollbar {
+  width: 0;
+}
 
 /* Month Picker */
 .mood-month-picker {
@@ -1267,44 +1405,80 @@ button { cursor: pointer; border: none; background: none; }
   display: flex;
   align-items: center;
   gap: 6px;
+  transition: background var(--transition-fast);
+}
+
+.mood-month-btn:hover {
+  background: var(--purple-light);
+  color: var(--white);
 }
 
 /* Calendar Grid */
-.mood-calendar-grid {
+.mood-cal-header {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+
+.mood-cal-days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 6px;
   text-align: center;
 }
 
-.mood-cal-header {
+.mood-cal-day-name {
   font-size: 12px;
   font-weight: 800;
   color: var(--text-mid);
-  padding: 8px 0;
+  padding: 6px 0;
 }
 
-.mood-cal-day {
+.mood-cal-cell {
   aspect-ratio: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   font-size: 13px;
   font-weight: 700;
   color: var(--text-dark);
-  cursor: pointer;
-  transition: transform var(--transition-fast), background var(--transition-fast);
   position: relative;
+  transition: transform var(--transition-fast);
+  background: var(--gray-100);
+  cursor: default;
 }
 
-.mood-cal-day:hover { transform: scale(1.1); }
-.mood-cal-day.empty { cursor: default; }
-.mood-cal-day.today { border: 2px solid var(--purple-mid); }
+.mood-cal-cell.empty {
+  background: transparent;
+}
 
-.mood-cal-day.logged {
+.mood-cal-cell.today {
+  border: 2.5px solid var(--purple-mid);
+}
+
+.mood-cal-cell.filled {
   color: var(--white);
   font-weight: 800;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.mood-cal-cell.filled:hover {
+  transform: scale(1.1);
+}
+
+.mood-cal-num {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.mood-cal-emoji {
+  font-size: 10px;
+  line-height: 1;
+  margin-top: 1px;
 }
 
 /* Recommendations */
@@ -1353,9 +1527,7 @@ button { cursor: pointer; border: none; background: none; }
   cursor: pointer;
 }
 
-/* ============================================================
-   SCREEN: LOG YOUR DAY
-   ============================================================ */
+/* -- SCREEN: LOG YOUR DAY -- */
 #screen-log-day {
   background: var(--yellow-bg);
 }
@@ -1390,7 +1562,9 @@ button { cursor: pointer; border: none; background: none; }
   gap: 24px;
 }
 
-.log-scroll::-webkit-scrollbar { width: 0; }
+.log-scroll::-webkit-scrollbar {
+  width: 0;
+}
 
 .log-date {
   font-family: 'Yellowtail', cursive;
@@ -1398,45 +1572,39 @@ button { cursor: pointer; border: none; background: none; }
   color: var(--purple-mid);
 }
 
-/* Mood Score Circle */
-.mood-score-circle {
-  width: 140px;
-  height: 140px;
+/* Mood Gradient Circle */
+.mood-gradient-circle {
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   background: var(--gray-200);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  box-shadow: inset 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: inset 0 4px 16px rgba(0, 0, 0, 0.08), 0 4px 20px rgba(0, 0, 0, 0.06);
+  transition: background var(--transition-normal);
 }
 
-.mood-score-value {
-  font-size: 48px;
+.mood-gradient-circle.has-emotions {
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1), 0 6px 24px rgba(0, 0, 0, 0.12);
+}
+
+.mood-gradient-prompt {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-mid);
+  text-align: center;
+  padding: 16px;
+  line-height: 1.4;
+  transition: opacity var(--transition-fast);
+}
+
+.mood-gradient-circle.has-emotions .mood-gradient-prompt {
+  color: var(--white);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  font-size: 28px;
   font-weight: 900;
-  color: var(--purple-mid);
-}
-
-.mood-score-slider {
-  width: 80%;
-  margin: 0 auto;
-  -webkit-appearance: none;
-  appearance: none;
-  height: 6px;
-  border-radius: var(--radius-full);
-  background: linear-gradient(90deg, var(--mood-1), var(--mood-5), var(--mood-10));
-  outline: none;
-}
-
-.mood-score-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: var(--white);
-  box-shadow: var(--shadow-md);
-  cursor: pointer;
-  border: 3px solid var(--purple-mid);
 }
 
 /* Emotion Tags */
@@ -1454,27 +1622,24 @@ button { cursor: pointer; border: none; background: none; }
   font-weight: 700;
   cursor: pointer;
   transition: all var(--transition-fast);
-  border: 2px solid var(--gray-200);
+  border: 2px solid var(--gray-300);
   background: var(--white);
   color: var(--text-dark);
 }
 
-.emotion-tag:hover { border-color: var(--purple-light); }
-
-.emotion-tag.selected {
-  background: var(--purple-mid);
-  color: var(--white);
-  border-color: var(--purple-mid);
+.emotion-tag:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
 }
 
-.emotion-tag.angry { border-color: #E57373; }
-.emotion-tag.angry.selected { background: #E57373; border-color: #E57373; }
-.emotion-tag.sad { border-color: #64B5F6; }
-.emotion-tag.sad.selected { background: #64B5F6; border-color: #64B5F6; }
-.emotion-tag.happy { border-color: #FFD54F; }
-.emotion-tag.happy.selected { background: #FFD54F; border-color: #FFD54F; color: var(--text-dark); }
-.emotion-tag.calm { border-color: #81C784; }
-.emotion-tag.calm.selected { background: #81C784; border-color: #81C784; }
+.emotion-tag.selected {
+  color: var(--white);
+  border-color: transparent;
+  transform: scale(1.05);
+  box-shadow: var(--shadow-md);
+}
+
+/* Individual emotion tag colors via data-color applied by JS */
 
 /* Joy Help Section */
 .joy-help-section {
@@ -1535,11 +1700,60 @@ button { cursor: pointer; border: none; background: none; }
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  transition: background var(--transition-fast), transform var(--transition-fast);
 }
 
-/* ============================================================
-   SCREEN: ACCOUNT
-   ============================================================ */
+.joy-help-send:hover {
+  background: var(--purple-dark);
+  transform: scale(1.05);
+}
+
+.joy-help-send:disabled {
+  background: var(--gray-400);
+  cursor: not-allowed;
+}
+
+.joy-detect-result {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green-mint);
+  min-height: 18px;
+}
+
+/* Save Emotions Button */
+.btn-save-emotions {
+  width: 100%;
+  background: linear-gradient(135deg, var(--yellow), var(--yellow-dark));
+  color: var(--text-dark);
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-save-emotions:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-save-emotions:active {
+  transform: translateY(0);
+}
+
+.btn-save-emotions:disabled {
+  background: var(--gray-300);
+  color: var(--gray-500);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* -- SCREEN: ACCOUNT -- */
 #screen-account {
   background: var(--white);
 }
@@ -1550,7 +1764,9 @@ button { cursor: pointer; border: none; background: none; }
   padding-bottom: 100px;
 }
 
-.account-scroll::-webkit-scrollbar { width: 0; }
+.account-scroll::-webkit-scrollbar {
+  width: 0;
+}
 
 .account-header {
   padding: 24px 20px;
@@ -1604,7 +1820,9 @@ button { cursor: pointer; border: none; background: none; }
   transition: background var(--transition-fast);
 }
 
-.btn-logout:hover { background: var(--gray-100); }
+.btn-logout:hover {
+  background: var(--gray-100);
+}
 
 /* Guardian Card */
 .guardian-card {
@@ -1686,7 +1904,11 @@ button { cursor: pointer; border: none; background: none; }
   transition: background var(--transition-fast);
 }
 
-.account-menu-item:hover { background: var(--gray-50); margin: 0 -20px; padding: 14px 20px; }
+.account-menu-item:hover {
+  background: var(--gray-50);
+  margin: 0 -20px;
+  padding: 14px 20px;
+}
 
 .account-menu-item span {
   font-size: 14px;
@@ -1699,11 +1921,11 @@ button { cursor: pointer; border: none; background: none; }
   color: var(--gray-400);
 }
 
-.account-menu-item.danger span { color: #E53935; }
+.account-menu-item.danger span {
+  color: #E53935;
+}
 
-/* ============================================================
-   SCREEN: EDIT PROFILE
-   ============================================================ */
+/* -- SCREEN: EDIT PROFILE -- */
 #screen-edit-profile {
   background: var(--white);
 }
@@ -1731,7 +1953,9 @@ button { cursor: pointer; border: none; background: none; }
   gap: 20px;
 }
 
-.edit-profile-scroll::-webkit-scrollbar { width: 0; }
+.edit-profile-scroll::-webkit-scrollbar {
+  width: 0;
+}
 
 .edit-avatar-wrapper {
   align-self: center;
@@ -1821,11 +2045,12 @@ button { cursor: pointer; border: none; background: none; }
   margin-top: 12px;
 }
 
-.btn-save-profile:hover { background: var(--purple-dark); transform: translateY(-1px); }
+.btn-save-profile:hover {
+  background: var(--purple-dark);
+  transform: translateY(-1px);
+}
 
-/* ============================================================
-   TOAST NOTIFICATION
-   ============================================================ */
+/* -- TOAST NOTIFICATION -- */
 .toast {
   position: fixed;
   bottom: 100px;
@@ -1849,13 +2074,11 @@ button { cursor: pointer; border: none; background: none; }
   transform: translateX(-50%) translateY(0);
 }
 
-/* ============================================================
-   DELETE CONFIRMATION MODAL
-   ============================================================ */
+/* -- DELETE CONFIRMATION MODAL -- */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1932,9 +2155,7 @@ button { cursor: pointer; border: none; background: none; }
   cursor: pointer;
 }
 
-/* ============================================================
-   LOADING / SKELETON
-   ============================================================ */
+/* -- LOADING / SKELETON -- */
 .skeleton {
   background: linear-gradient(90deg, var(--gray-200) 25%, var(--gray-100) 50%, var(--gray-200) 75%);
   background-size: 200% 100%;
@@ -1943,21 +2164,251 @@ button { cursor: pointer; border: none; background: none; }
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
 }
 
-/* ============================================================
-   UTILITIES
-   ============================================================ */
-.text-center { text-align: center; }
-.hidden { display: none !important; }
-.mt-sm { margin-top: var(--space-sm); }
-.mt-md { margin-top: var(--space-md); }
-.mt-lg { margin-top: var(--space-lg); }
-.mb-sm { margin-bottom: var(--space-sm); }
-.mb-md { margin-bottom: var(--space-md); }
-.mb-lg { margin-bottom: var(--space-lg); }
-.gap-sm { gap: var(--space-sm); }
-.gap-md { gap: var(--space-md); }
-.w-full { width: 100%; }
+/* -- UTILITIES -- */
+.text-center {
+  text-align: center;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.mt-sm {
+  margin-top: var(--space-sm);
+}
+
+.mt-md {
+  margin-top: var(--space-md);
+}
+
+.mt-lg {
+  margin-top: var(--space-lg);
+}
+
+.mb-sm {
+  margin-bottom: var(--space-sm);
+}
+
+.mb-md {
+  margin-bottom: var(--space-md);
+}
+
+.mb-lg {
+  margin-bottom: var(--space-lg);
+}
+
+.gap-sm {
+  gap: var(--space-sm);
+}
+
+.gap-md {
+  gap: var(--space-md);
+}
+
+.w-full {
+  width: 100%;
+}
+
+/* -- JOURNAL FEATURE -- */
+
+.journal-card {
+  background: var(--white);
+  border-radius: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.journal-image-container {
+  padding: 16px 16px 8px 16px;
+  position: relative;
+}
+
+.journal-image {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #f0f0f0;
+}
+
+.journal-heart-icon {
+  position: absolute;
+  bottom: 16px;
+  right: 24px;
+  color: #FF7B93; /* Pink heart */
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.journal-carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.carousel-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gray-300);
+}
+
+.carousel-dot.active {
+  background: var(--gray-500);
+}
+
+.journal-content-wrapper {
+  padding: 8px 24px 24px 24px;
+}
+
+.journal-date {
+  font-family: 'Caveat', cursive;
+  font-size: 28px;
+  color: var(--purple-mid);
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.journal-content {
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  color: var(--purple-mid);
+  line-height: 1.6;
+  text-align: center;
+  font-weight: 500;
+}
+
+.journal-ai-feedback {
+  background: #A8DBA8; /* Pastel green */
+  padding: 20px 24px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.journal-ai-header {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--purple-mid);
+}
+
+.journal-ai-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--purple-mid);
+}
+
+/* Saved Favorites Folder Widget */
+.saved-favorites-widget {
+  position: relative;
+  height: 120px;
+  margin: 32px 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.folder-card-bg1 {
+  position: absolute;
+  bottom: 24px;
+  width: 85%;
+  height: 80px;
+  background: #F8F9FA;
+  border-radius: 12px;
+  border: 1px solid #E9ECEF;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+  z-index: 1;
+}
+
+.folder-card-bg2 {
+  position: absolute;
+  bottom: 12px;
+  width: 90%;
+  height: 80px;
+  background: #EAE6FF;
+  border-radius: 12px;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+  z-index: 2;
+}
+
+.folder-card-front {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 80px;
+  background: #B5A8D8; /* Purple folder color */
+  border-radius: 12px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+}
+
+.folder-card-front span {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  color: #FFE566; /* Yellow text */
+  font-size: 16px;
+}
+.journal-tools {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding: 12px;
+}
+
+.journal-tools button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: var(--purple-mid);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.journal-write-area {
+  flex: 1;
+  padding: 0 20px;
+  background-image: repeating-linear-gradient(transparent, transparent 31px, var(--yellow) 31px, var(--yellow) 32px);
+  background-attachment: local;
+  display: flex;
+  flex-direction: column;
+}
+
+#journal-input {
+  width: 100%;
+  height: 400px; /* Or min-height */
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 16px;
+  line-height: 32px;
+  color: var(--text-dark);
+  padding-top: 8px; /* Align text with lines */
+}

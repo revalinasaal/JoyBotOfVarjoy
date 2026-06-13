@@ -47,11 +47,23 @@
       "dest": "main.py"
     },
     {
+      "src": "/account",
+      "dest": "main.py"
+    },
+    {
       "src": "/mood(.*)",
       "dest": "main.py"
     },
     {
       "src": "/moods(.*)",
+      "dest": "main.py"
+    },
+    {
+      "src": "/detect-emotion",
+      "dest": "main.py"
+    },
+    {
+      "src": "/journal(.*)",
       "dest": "main.py"
     },
     {
@@ -69,10 +81,6 @@
     {
       "src": "/(.*)",
       "dest": "index.html"
-    },
-    {
-      "src": "/account",
-      "dest": "main.py"
     }
   ]
 }
