@@ -23,34 +23,34 @@ Joy dirancang untuk memberikan respons yang empatik, suportif, tidak menghakimi,
 ## ✨ Fitur Utama
 
 * 💬 **Chat dengan Joy**
-  Pengguna dapat bercerita dan mendapatkan respons empatik dari chatbot Joy.
+  Pengguna dapat bercerita melalui halaman chat dan mendapatkan respons dari Joy. Joy dirancang untuk memberikan respons yang empatik, suportif, tidak menghakimi, dan sesuai dengan konteks percakapan pengguna.
 
 * 🎙️ **Input Suara**
-  Pengguna dapat menggunakan mikrofon untuk mengubah suara menjadi teks.
+  Pengguna dapat menggunakan mikrofon untuk mengirim pesan dalam bentuk suara. Suara yang diberikan akan dikonversi menjadi teks sehingga pengguna bisa berinteraksi dengan Joy tanpa harus mengetik secara manual.
 
 * 📌 **Riwayat Percakapan**
-  Percakapan pengguna dengan Joy dapat tersimpan agar mudah dilanjutkan kembali.
+  Percakapan antara pengguna dan Joy dapat tersimpan di dalam sistem. Dengan adanya riwayat percakapan, pengguna dapat melihat kembali pesan sebelumnya dan melanjutkan percakapan dengan lebih mudah.
 
 * 😊 **Mood Tracking**
-  Pengguna dapat mencatat mood harian sebagai media refleksi diri.
+  Pengguna dapat mencatat mood harian sebagai media refleksi diri. Fitur ini membantu pengguna mengenali kondisi emosional yang sedang dirasakan dari hari ke hari.
 
 * 📅 **Mood Calendar**
-  Pengguna dapat melihat riwayat mood yang sudah dicatat.
+  Pengguna dapat melihat riwayat mood yang sudah dicatat dalam bentuk kalender. Fitur ini memudahkan pengguna untuk melihat perubahan mood secara lebih teratur.
 
 * 📝 **Journaling**
-  Pengguna dapat menulis jurnal harian terkait perasaan atau pengalaman yang dialami.
+  Pengguna dapat menulis jurnal harian terkait perasaan, pengalaman, atau hal yang sedang dipikirkan. Fitur ini mendukung pengguna untuk melakukan refleksi diri secara lebih personal.
 
 * 🏠 **Dashboard Wellness**
-  Menampilkan ringkasan dan akses cepat ke fitur utama Varjoy.
+  Dashboard menampilkan ringkasan dan akses cepat ke fitur utama Varjoy. Melalui halaman ini, pengguna dapat melihat informasi singkat dan masuk ke fitur seperti mood tracking, journaling, atau chat Joy.
 
 * 👤 **Profil Pengguna**
-  Pengguna dapat mengelola data profil dan preferensi akun.
+  Pengguna dapat mengelola data profil dan preferensi akun. Data ini digunakan untuk membuat pengalaman penggunaan Varjoy menjadi lebih personal.
 
 * ⚙️ **Pengaturan Chat**
-  Pengguna dapat mengatur preferensi percakapan, seperti nama panggilan, tone respons, dan bahasa.
+  Pengguna dapat mengatur preferensi percakapan, seperti nama panggilan, tone respons, dan bahasa. Pengaturan ini membantu Joy memberikan respons yang lebih sesuai dengan kenyamanan pengguna.
 
 * 🚨 **Arahan Bantuan untuk Kondisi Serius**
-  Jika pengguna menunjukkan indikasi kondisi serius, Joy memberikan respons yang hati-hati dan menyarankan pengguna untuk mencari bantuan dari orang terdekat atau tenaga profesional.
+  Jika pengguna menunjukkan indikasi kondisi serius, Joy akan memberikan respons yang lebih hati-hati dan suportif. Joy tidak memberikan diagnosis, tetapi menyarankan pengguna untuk mencari bantuan dari orang terdekat, konselor, psikolog, atau tenaga profesional.
 
 ## 🖼️ Demonstrasi / Pratinjau
 
