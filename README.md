@@ -63,42 +63,45 @@ Beberapa tampilan aplikasi dapat dilihat di bawah ini.
 <details>
 <summary>🏠 Home / Dashboard</summary>
 
-![Home Dashboard](docs/preview/home-dashboard.jpeg)
+<br>
+
+<img src="docs/preview/home-dashboard.jpeg" width="250">
 
 </details>
 
 <details>
 <summary>📅 Mood Calendar</summary>
 
-![Mood Calendar](docs/preview/mood-calendar.jpeg)
+<br>
+
+<img src="docs/preview/mood-calendar.jpeg" width="250">
 
 </details>
 
 <details>
 <summary>😊 Log Your Day</summary>
 
-![Log Your Day](docs/preview/log-your-day.jpeg)
+<br>
+
+<img src="docs/preview/log-your-day.jpeg" width="250">
 
 </details>
 
 <details>
 <summary>💬 Chat Joy</summary>
 
-![Chat Joy](docs/preview/chat-joy.jpeg)
+<br>
+
+<img src="docs/preview/chat-joy.jpeg" width="250">
 
 </details>
 
 <details>
 <summary>👤 Profile</summary>
 
-![Profile](docs/preview/profile.jpeg)
+<br>
 
-</details>
-
-<details>
-<summary>📝 Journal Detail</summary>
-
-![Journal Detail](docs/preview/journal-detail.jpeg)
+<img src="docs/preview/profile.jpeg" width="250">
 
 </details>
 
