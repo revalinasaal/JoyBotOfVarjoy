@@ -58,12 +58,49 @@ Link prototype:
 
 https://varjoy-web.vercel.app/
 
-Screenshot tampilan aplikasi atau dokumentasi desain sistem diletakkan pada folder berikut:
+Beberapa tampilan aplikasi dapat dilihat di bawah ini.
 
-```txt
-docs/preview/
-docs/diagrams/
-```
+<details>
+<summary>🏠 Home / Dashboard</summary>
+
+![Home Dashboard](docs/preview/home-dashboard.jpeg)
+
+</details>
+
+<details>
+<summary>📅 Mood Calendar</summary>
+
+![Mood Calendar](docs/preview/mood-calendar.jpeg)
+
+</details>
+
+<details>
+<summary>😊 Log Your Day</summary>
+
+![Log Your Day](docs/preview/log-your-day.jpeg)
+
+</details>
+
+<details>
+<summary>💬 Chat Joy</summary>
+
+![Chat Joy](docs/preview/chat-joy.jpeg)
+
+</details>
+
+<details>
+<summary>👤 Profile</summary>
+
+![Profile](docs/preview/profile.jpeg)
+
+</details>
+
+<details>
+<summary>📝 Journal Detail</summary>
+
+![Journal Detail](docs/preview/journal-detail.jpeg)
+
+</details>
 
 ## ⚙️ Cara Instalasi
 
