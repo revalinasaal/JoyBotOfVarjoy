@@ -1,6 +1,6 @@
 ## 📝 Judul Proyek
 
-***Joy AI: Intelligent Chatbot for Students’ Mental Health***
+## **Joy AI: Intelligent Chatbot for Students’ Mental Health**
 
 Joy AI adalah proyek chatbot berbasis AI yang diimplementasikan dalam website bernama **Varjoy**. Di dalam Varjoy, pengguna dapat berinteraksi dengan chatbot bernama **Joy**.
 
