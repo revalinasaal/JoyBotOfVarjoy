@@ -1,7 +1,3 @@
-from pathlib import Path
-
-readme = """# 🌱 Joy AI / Varjoy
-
 ## 📝 Judul Proyek
 **Joy AI: Intelligent Chatbot for Students’ Mental Health**
 
@@ -60,29 +56,7 @@ Joy dirancang untuk memberikan respons yang empatik, suportif, tidak menghakimi,
 Link prototype:
 https://varjoy-web.vercel.app/
 
-Screenshot atau dokumentasi tampilan aplikasi dapat diletakkan pada folder:
-
-```txt
-docs/preview/
-
-Contoh isi folder:
-
-docs/preview/landing-page.png
-docs/preview/home.png
-docs/preview/chat-joy.png
-docs/preview/mood-tracking.png
-docs/preview/profile.png
-
-File desain sistem dapat diletakkan pada folder:
-
-docs/diagrams/
-
-Contoh isi folder:
-
-docs/diagrams/use-case-diagram.png
-docs/diagrams/alur-sistem-chatbot-joy.png
-docs/diagrams/activity-diagram-varjoy.png
-⚙️ Cara Instalasi
+## ⚙️ Cara Instalasi
 
 Ikuti langkah berikut untuk menjalankan project secara lokal.
 
@@ -132,7 +106,8 @@ python -m http.server 5500
 Lalu buka:
 
 http://localhost:5500
-🚀 Panduan Penggunaan
+
+## 🚀 Panduan Penggunaan
 
 Contoh alur penggunaan Varjoy:
 
@@ -144,7 +119,8 @@ Buka halaman chat Joy.
 Ketik pesan atau gunakan input suara.
 Joy akan memberikan respons sesuai konteks percakapan.
 Pengguna dapat melihat riwayat percakapan, menulis jurnal, atau mengubah profil.
-🛠️ Teknologi yang Digunakan
+
+## 🛠️ Teknologi yang Digunakan
 Frontend
 HTML
 CSS
@@ -170,7 +146,8 @@ Vercel
 AI Tools Pengembangan
 ChatGPT
 Claude
-🤝 Lisensi & Kontribusi
+
+## 🤝 Lisensi & Kontribusi
 
 Project ini dibuat untuk keperluan tugas besar mata kuliah Kecerdasan Buatan.
 
@@ -187,7 +164,7 @@ Jika ingin mengembangkan project ini, silakan fork repository, buat branch baru,
 
 Lisensi dapat disesuaikan dengan kebutuhan kelompok. Jika ingin dibuat open source, project ini dapat menggunakan lisensi MIT.
 
-👥 Anggota Kelompok
+## 👥 Anggota Kelompok
 
 Kelompok 3:
 
