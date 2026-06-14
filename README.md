@@ -112,8 +112,8 @@ Ikuti langkah berikut untuk menjalankan project secara lokal.
 ### 1. Clone repository
 
 ```bash
-git clone <link-repository>
-cd JoyBotOfVarjoy-main
+git clone git clone https://github.com/revalinasaal/JoyBotOfVarjoy.git
+cd JoyBotOfVarjoy
 ```
 
 ### 2. Buat virtual environment
