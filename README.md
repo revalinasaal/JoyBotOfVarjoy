@@ -58,25 +58,11 @@ Link prototype:
 
 https://varjoy-web.vercel.app/
 
-Screenshot tampilan aplikasi atau dokumentasi desain sistem dapat diletakkan pada folder berikut:
+Screenshot tampilan aplikasi atau dokumentasi desain sistem diletakkan pada folder berikut:
 
 ```txt
 docs/preview/
 docs/diagrams/
-```
-
-Contoh isi folder:
-
-```txt
-docs/preview/landing-page.png
-docs/preview/home.png
-docs/preview/chat-joy.png
-docs/preview/mood-tracking.png
-docs/preview/profile.png
-
-docs/diagrams/use-case-diagram.png
-docs/diagrams/alur-sistem-chatbot-joy.png
-docs/diagrams/activity-diagram-varjoy.png
 ```
 
 ## ⚙️ Cara Instalasi
