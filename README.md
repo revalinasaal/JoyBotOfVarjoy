@@ -112,7 +112,7 @@ Ikuti langkah berikut untuk menjalankan project secara lokal.
 ### 1. Clone repository
 
 ```bash
-git clone git clone https://github.com/revalinasaal/JoyBotOfVarjoy.git
+git clone https://github.com/revalinasaal/JoyBotOfVarjoy.git
 cd JoyBotOfVarjoy
 ```
 
