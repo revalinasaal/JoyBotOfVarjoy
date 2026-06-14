@@ -215,8 +215,6 @@ Kontribusi diperbolehkan untuk pengembangan atau pembelajaran lebih lanjut, sepe
 
 Jika ingin mengembangkan project ini, silakan fork repository, buat branch baru, lalu ajukan pull request.
 
-Lisensi dapat disesuaikan dengan kebutuhan kelompok. Jika ingin dibuat open source, project ini dapat menggunakan lisensi MIT.
-
 ## 👥 Anggota Kelompok
 
 Kelompok 3:
